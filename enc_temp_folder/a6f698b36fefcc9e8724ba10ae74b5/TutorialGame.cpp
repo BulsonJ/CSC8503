@@ -513,6 +513,7 @@ bool TutorialGame::SelectObject() {
 			if (world->Raycast(ray, closestCollision, true)) {
 				selectionObject = (GameObject*)closestCollision.node;
 				selectionObject->GetRenderObject()->SetColour(Vector4(0, 1, 0, 1));
+				//world->GetMainCamera()->GetPosition()
 				Debug::DrawLine(world->GetMainCamera()->GetPosition(), closestCollision.collidedAt, Debug::RED, 10.0f);
 				return true;
 			}
