@@ -53,6 +53,8 @@ namespace NCL {
 				std::vector<Constraint*>::const_iterator& first,
 				std::vector<Constraint*>::const_iterator& last) const;
 
+			void UpdateObjectRaycasts();
+
 		protected:
 			std::vector<GameObject*> gameObjects;
 			std::vector<Constraint*> constraints;

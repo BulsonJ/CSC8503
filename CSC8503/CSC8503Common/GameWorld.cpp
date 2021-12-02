@@ -68,6 +68,7 @@ void GameWorld::UpdateWorld(float dt) {
 	if (shuffleConstraints) {
 		std::random_shuffle(constraints.begin(), constraints.end());
 	}
+	UpdateObjectRaycasts();
 }
 
 bool GameWorld::Raycast(Ray& r, RayCollision& closestCollision, bool closestObject) const {
@@ -78,7 +79,7 @@ bool GameWorld::Raycast(Ray& r, RayCollision& closestCollision, bool closestObje
 		if (!i->GetBoundingVolume()) { //objects might not be collideable etc...
 			continue;
 		}
-		if (i->GetCollisionLayer() == CollisionLayer::UI) {
+		if (i->GetCollisionLayer() == CollisionLayer::UI) { //if the object is not on the collision layer
 			continue;
 		}
 		RayCollision thisCollision;
@@ -105,6 +106,19 @@ bool GameWorld::Raycast(Ray& r, RayCollision& closestCollision, bool closestObje
 	return false;
 }
 
+void GameWorld::UpdateObjectRaycasts() {
+	for (auto& i : gameObjects) {
+		// Ray from position to forward vector
+		Ray ray(i->GetTransform().GetPosition(), i->GetTransform().GetOrientation() * Vector3(0, 0, -1));
+
+		RayCollision closestCollision;
+		if (Raycast(ray, closestCollision, true)) {
+			if (closestCollision.node) {
+				Debug::DrawLine(ray.GetPosition(), closestCollision.collidedAt, Debug::RED, 0.0f);
+			}
+		}
+	}
+}
 
 /*
 Constraint Tutorial Stuff
