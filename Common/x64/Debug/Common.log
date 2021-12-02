@@ -1,1 +1,7 @@
-﻿
+﻿  MeshMaterial.cpp
+  Win32Mouse.cpp
+  Win32Window.cpp
+  Window.cpp
+  Generating Code...
+C:\Users\b8025171\source\repos\Technologies\CSC8503\Common\MeshMaterial.cpp(48,44): warning C4267:  'initializing': conversion from 'size_t' to 'int', possible loss of data
+  Common.vcxproj -> C:\Users\b8025171\source\repos\Technologies\CSC8503\x64\Debug\Common.lib
