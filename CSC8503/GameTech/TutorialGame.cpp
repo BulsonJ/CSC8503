@@ -13,6 +13,7 @@ TutorialGame::TutorialGame()	{
 	renderer	= new GameTechRenderer(*world);
 	physics		= new PhysicsSystem(*world);
 
+	//physics->SetGlobalDamping(0.4f);
 	forceMagnitude	= 10.0f;
 	useGravity		= false;
 	inSelectionMode = false;
