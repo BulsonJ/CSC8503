@@ -519,8 +519,6 @@ bool TutorialGame::SelectObject() {
 			else {
 				return false;
 			}
-
-
 		}
 	}
 	else {
