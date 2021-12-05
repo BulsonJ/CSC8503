@@ -115,12 +115,11 @@ bool CollisionDetection::RayOBBIntersection(const Ray&r, const Transform& worldT
 
 bool CollisionDetection::RayCapsuleIntersection(const Ray& r, const Transform& worldTransform, const CapsuleVolume& volume, RayCollision& collision) {
 	// ------------- CAPSULE WORLD POSITIONS -------------- 
-
 	Vector3 capsulePos = worldTransform.GetPosition();
 	float capsuleRadius = volume.GetRadius();
 	Vector3 objectDir = worldTransform.GetOrientation() * Vector3(0, 1, 0);
 	Vector3 vectorToEnd = objectDir * (volume.GetHalfHeight() - volume.GetRadius());
-;	Vector3 bottomPoint = capsulePos - vectorToEnd;
+	Vector3 bottomPoint = capsulePos - vectorToEnd;
 	Vector3 topPoint = capsulePos + vectorToEnd;
 	Vector3 capsuleVector = topPoint - bottomPoint;
 
@@ -513,5 +512,23 @@ bool CollisionDetection::OBBIntersection(
 bool CollisionDetection::SphereCapsuleIntersection(
 	const CapsuleVolume& volumeA, const Transform& worldTransformA,
 	const SphereVolume& volumeB, const Transform& worldTransformB, CollisionInfo& collisionInfo) {
-	return false;
+	// ------------- CAPSULE WORLD POSITIONS -------------- 
+	Vector3 capsulePos = worldTransformA.GetPosition();
+	Vector3 objectDir = worldTransformA.GetOrientation() * Vector3(0, 1, 0);
+	Vector3 vectorToEnd = objectDir * (volumeA.GetHalfHeight() - volumeA.GetRadius());
+	Vector3 bottomPoint = capsulePos - vectorToEnd;
+	Vector3 topPoint = capsulePos + vectorToEnd;
+	Vector3 capsuleVector = topPoint - bottomPoint;
+
+	// ---------- CLAMP CIRCLE POS TO CAPSULE LINE TO FIND SPHERE CHECK POS -----------
+	// Reference: https://wickedengine.net/2020/04/26/capsule-collision-detection/
+	Vector3 AB = bottomPoint - topPoint;
+	float t = Vector3::Dot(worldTransformB.GetPosition() - topPoint, AB) / Vector3::Dot(AB, AB);
+	float multiplier = Maths::Clamp(t, (float)0, (float)1);
+	Vector3 clampedPos = topPoint + AB * multiplier;
+
+	// -------------- SPHERE CHECK AT CLAMPED POS---------------- 
+	Transform sphereTransform = worldTransformA;
+	sphereTransform.SetPosition(clampedPos);
+	return SphereIntersection(SphereVolume(volumeA.GetRadius()), sphereTransform, volumeB, worldTransformB, collisionInfo);
 }
