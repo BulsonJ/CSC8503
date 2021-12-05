@@ -107,7 +107,7 @@ bool GameWorld::Raycast(Ray& r, RayCollision& closestCollision, bool closestObje
 }
 
 void GameWorld::UpdateObjectRaycasts() {
-	for (auto& i : gameObjects) {
+	/*for (auto& i : gameObjects) {
 		// Ray from position to forward vector
 		Ray ray(i->GetTransform().GetPosition(), i->GetTransform().GetOrientation() * Vector3(0, 0, -1));
 
@@ -117,7 +117,7 @@ void GameWorld::UpdateObjectRaycasts() {
 				Debug::DrawLine(ray.GetPosition(), closestCollision.collidedAt, Debug::RED, 0.0f);
 			}
 		}
-	}
+	}*/
 }
 
 /*
