@@ -6,6 +6,8 @@
 #include "../../Common/TextureLoader.h"
 #include "../CSC8503Common/PositionConstraint.h"
 #include "../CSC8503Common/StateGameObject.h"
+#include "../CSC8503Common/EnemyGameObject.h"
+#include "../CSC8503Common/NavigationGrid.h"
 
 using namespace NCL;
 using namespace CSC8503;
@@ -104,6 +106,19 @@ void TutorialGame::UpdateGame(float dt) {
 		world->GetMainCamera()->SetYaw(angles.y);
 
 		//Debug::DrawAxisLines(lockedObject->GetTransform().GetMatrix(), 2.0f);
+	}
+
+	for (auto it = enemies.begin(); it != enemies.end(); it++) {
+		EnemyGameObject* e = static_cast<EnemyGameObject*>(*it);
+		debugPath = e->GetPath();
+		if (debugPath.size() > 0) {
+			for (int i = 1; i < debugPath.size(); ++i) {
+				Vector3 a = debugPath[i - 1];
+				Vector3 b = debugPath[i];
+
+				Debug::DrawLine(a + Vector3(0, 1, 0), b + Vector3(0, 1, 0), Vector4(0, 1, 0, 1), 0.0f);
+			}
+		}
 	}
 
 	world->UpdateWorld(dt);
@@ -246,6 +261,10 @@ void TutorialGame::InitCamera() {
 void TutorialGame::InitWorld() {
 	world->ClearAndErase();
 	physics->Clear();
+
+	if (grid == nullptr) {
+		grid = new NavigationGrid("TestGrid2.txt");
+	}
 
 	BridgeConstraintTest();
 	InitMixedGridWorld(5, 5, 3.5f, 3.5f);
@@ -429,8 +448,8 @@ void TutorialGame::InitDefaultFloor() {
 }
 
 void TutorialGame::InitGameExamples() {
-	AddPlayerToWorld(Vector3(0, 5, 0));
-	AddEnemyToWorld(Vector3(5, 5, 0));
+	AddPlayerToWorld(Vector3(80, 0, 10));
+	AddEnemyToWorld(Vector3(80, 0, 80));
 	AddBonusToWorld(Vector3(10, 5, 0));
 }
 
@@ -460,6 +479,7 @@ GameObject* TutorialGame::AddPlayerToWorld(const Vector3& position) {
 	character->GetPhysicsObject()->InitSphereInertia();
 
 	world->AddGameObject(character);
+	player = character;
 
 	//lockedObject = character;
 
@@ -470,7 +490,7 @@ GameObject* TutorialGame::AddEnemyToWorld(const Vector3& position) {
 	float meshSize		= 3.0f;
 	float inverseMass	= 0.5f;
 
-	GameObject* character = new GameObject();
+	GameObject* character = new EnemyGameObject(grid, player);
 
 	AABBVolume* volume = new AABBVolume(Vector3(0.3f, 0.9f, 0.3f) * meshSize);
 	character->SetBoundingVolume((CollisionVolume*)volume);
@@ -486,7 +506,7 @@ GameObject* TutorialGame::AddEnemyToWorld(const Vector3& position) {
 	character->GetPhysicsObject()->InitSphereInertia();
 
 	world->AddGameObject(character);
-
+	enemies.emplace_back(character);
 	return character;
 }
 

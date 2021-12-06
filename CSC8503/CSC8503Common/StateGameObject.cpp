@@ -10,6 +10,7 @@ StateGameObject::StateGameObject() {
 	counter = 0.0f;
 	stateMachine = new StateMachine();
 
+	
 	State * stateA = new State([&](float dt)-> void
 	{
 		this->MoveLeft(dt);

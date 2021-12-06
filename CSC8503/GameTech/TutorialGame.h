@@ -4,7 +4,8 @@
 
 namespace NCL {
 	namespace CSC8503 {
-		class StateGameObject;
+		class NavigationGrid;
+		class EnemyGameObject;
 
 		class TutorialGame		{
 		public:
@@ -75,6 +76,11 @@ namespace NCL {
 			void LockCameraToObject(GameObject* o) {
 				lockedObject = o;
 			}
+
+			GameObject* player;
+			vector<GameObject*> enemies;
+			NavigationGrid* grid;
+			vector<Vector3> debugPath;
 
 		};
 	}
