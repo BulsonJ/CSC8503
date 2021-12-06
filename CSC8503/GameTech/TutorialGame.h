@@ -4,6 +4,8 @@
 
 namespace NCL {
 	namespace CSC8503 {
+		class StateGameObject;
+
 		class TutorialGame		{
 		public:
 			TutorialGame();
@@ -41,6 +43,8 @@ namespace NCL {
 			GameObject* AddPlayerToWorld(const Vector3& position);
 			GameObject* AddEnemyToWorld(const Vector3& position);
 			GameObject* AddBonusToWorld(const Vector3& position);
+
+			GameObject* AddStateObjectToWorld(const Vector3& position);
 
 			GameTechRenderer*	renderer;
 			PhysicsSystem*		physics;

@@ -48,3 +48,7 @@ void GameObject::UpdateBroadphaseAABB() {
 		// Implement capsule ABB
 	}
 }
+
+void GameObject::Update(float dt) {
+
+}

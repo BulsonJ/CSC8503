@@ -61,6 +61,10 @@ void GameWorld::OperateOnContents(GameObjectFunc f) {
 }
 
 void GameWorld::UpdateWorld(float dt) {
+	for (auto it = gameObjects.begin(); it != gameObjects.end(); it++) {
+		(*it)->Update(dt);
+	}
+	
 	if (shuffleObjects) {
 		std::random_shuffle(gameObjects.begin(), gameObjects.end());
 	}

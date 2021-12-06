@@ -126,7 +126,7 @@ bool CollisionDetection::RayCapsuleIntersection(const Ray& r, const Transform& w
 	// --------- PROJECT CAPSULE ONTO PLANE ----------------- 
 	Vector3 dir = (capsulePos - r.GetPosition());
 	Vector3 planePoint = capsulePos + Vector3::Cross(capsuleVector, dir).Normalised();
-	Plane p = Plane::PlaneFromTri(topPoint, bottomPoint, planePoint);
+	Plane p = Plane::PlaneFromTri(topPoint + (dir.Normalised() * capsuleRadius), bottomPoint + (dir.Normalised() * capsuleRadius), planePoint);
 
 	if (!RayPlaneIntersection(r, p, collision)) {
 		return false;

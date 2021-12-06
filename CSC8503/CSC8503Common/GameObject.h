@@ -90,6 +90,8 @@ namespace NCL {
 				collisionLayer = layer;
 			}
 
+			virtual void Update(float dt);
+
 		protected:
 			Transform			transform;
 
