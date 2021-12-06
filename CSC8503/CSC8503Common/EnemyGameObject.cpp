@@ -71,6 +71,15 @@ EnemyGameObject::EnemyGameObject(NavigationGrid* grid, GameObject* target) {
 			}
 		}
 	));
+
+	/*
+	
+	
+	IDLE --------->
+	
+	
+	
+	*/
 }
 
 EnemyGameObject::~EnemyGameObject() {

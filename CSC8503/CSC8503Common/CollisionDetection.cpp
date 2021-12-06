@@ -389,6 +389,15 @@ bool CollisionDetection::ObjectIntersection(GameObject* a, GameObject* b, Collis
 		return SphereCapsuleIntersection((CapsuleVolume&)*volB, transformB, (SphereVolume&)*volA, transformA, collisionInfo);
 	}
 
+	if (volA->type == VolumeType::Capsule && volB->type == VolumeType::AABB) {
+		return AABBCapsuleIntersection((CapsuleVolume&)*volA, transformA, (AABBVolume&)*volB, transformB, collisionInfo);
+	}
+	if (volA->type == VolumeType::AABB && volB->type == VolumeType::Capsule) {
+		collisionInfo.a = b;
+		collisionInfo.b = a;
+		return AABBCapsuleIntersection((CapsuleVolume&)*volB, transformB, (AABBVolume&)*volA, transformA, collisionInfo);
+	}
+
 	return false;
 }
 
@@ -531,4 +540,29 @@ bool CollisionDetection::SphereCapsuleIntersection(
 	Transform sphereTransform = worldTransformA;
 	sphereTransform.SetPosition(clampedPos);
 	return SphereIntersection(SphereVolume(volumeA.GetRadius()), sphereTransform, volumeB, worldTransformB, collisionInfo);
+}
+
+bool CollisionDetection::AABBCapsuleIntersection(
+	const CapsuleVolume& volumeA, const Transform& worldTransformA,
+	const AABBVolume& volumeB, const Transform& worldTransformB, CollisionInfo& collisionInfo) {
+	// ------------- CAPSULE WORLD POSITIONS -------------- 
+	Vector3 capsulePos = worldTransformA.GetPosition();
+	Vector3 objectDir = worldTransformA.GetOrientation() * Vector3(0, 1, 0);
+	Vector3 vectorToEnd = objectDir * (volumeA.GetHalfHeight() - volumeA.GetRadius());
+	Vector3 bottomPoint = capsulePos - vectorToEnd;
+	Vector3 topPoint = capsulePos + vectorToEnd;
+	Vector3 capsuleVector = topPoint - bottomPoint;
+
+	// ---------- CLAMP RECT POS TO CAPSULE LINE TO FIND SPHERE CHECK POS -----------
+	// Reference: https://wickedengine.net/2020/04/26/capsule-collision-detection/
+	Vector3 AB = bottomPoint - topPoint;
+	float t = Vector3::Dot(worldTransformB.GetPosition() - topPoint, AB) / Vector3::Dot(AB, AB);
+	float multiplier = Maths::Clamp(t, (float)0, (float)1);
+	Vector3 clampedPos = topPoint + AB * multiplier;
+	Debug::DrawLine(clampedPos + Vector3(10, 0, 0), clampedPos + Vector3(-10, 0, 0), Vector4(1.0, 0.0, 0.0, 1.0), 0.0);
+
+	// -------------- SPHERE CHECK AT CLAMPED POS---------------- 
+	Transform sphereTransform = worldTransformA;
+	sphereTransform.SetPosition(clampedPos);
+	return AABBSphereIntersection(volumeB, worldTransformB,SphereVolume(volumeA.GetRadius()), sphereTransform, collisionInfo);
 }
