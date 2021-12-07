@@ -1,1 +1,6 @@
-﻿  GameTech.vcxproj -> C:\Users\b8025171\source\repos\Technologies\CSC8503\x64\Debug\GameTech.exe
+﻿  GameTechRenderer.cpp
+  Main.cpp
+  TutorialGame.cpp
+  Generating Code...
+C:\Users\b8025171\source\repos\Technologies\CSC8503\CSC8503\GameTech\Main.cpp(58,12): warning C4244:  'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  GameTech.vcxproj -> C:\Users\b8025171\source\repos\Technologies\CSC8503\x64\Debug\GameTech.exe

@@ -284,7 +284,7 @@ compare the collisions that we absolutely need to.
 
 void PhysicsSystem::BroadPhase() {
 	broadphaseCollisions.clear();
-	QuadTree <GameObject*> tree(Vector2(1024, 1024), 7, 6);
+	QuadTree <GameObject*> tree(Vector3(1024, 1024, 1024), 7, 6);
 	
 	std::vector <GameObject*>::const_iterator first;
 	std::vector <GameObject*>::const_iterator last;
