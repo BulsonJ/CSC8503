@@ -559,10 +559,11 @@ bool CollisionDetection::AABBCapsuleIntersection(
 	float t = Vector3::Dot(worldTransformB.GetPosition() - topPoint, AB) / Vector3::Dot(AB, AB);
 	float multiplier = Maths::Clamp(t, (float)0, (float)1);
 	Vector3 clampedPos = topPoint + AB * multiplier;
-	Debug::DrawLine(clampedPos + Vector3(10, 0, 0), clampedPos + Vector3(-10, 0, 0), Vector4(1.0, 0.0, 0.0, 1.0), 0.0);
 
 	// -------------- SPHERE CHECK AT CLAMPED POS---------------- 
 	Transform sphereTransform = worldTransformA;
 	sphereTransform.SetPosition(clampedPos);
-	return AABBSphereIntersection(volumeB, worldTransformB,SphereVolume(volumeA.GetRadius()), sphereTransform, collisionInfo);
+	bool collision = AABBSphereIntersection(volumeB, worldTransformB, SphereVolume(volumeA.GetRadius()), sphereTransform, collisionInfo);
+	collisionInfo.point.normal = -collisionInfo.point.normal;
+	return collision;
 }
