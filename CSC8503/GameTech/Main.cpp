@@ -7,6 +7,8 @@
 #include "../CSC8503Common/NavigationGrid.h"
 
 #include "TutorialGame.h"
+#include "LevelOne.h"
+#include "LevelTwo.h"
 
 using namespace NCL;
 using namespace CSC8503;
@@ -59,8 +61,7 @@ int main() {
 	w->ShowOSPointer(false);
 	w->LockMouseToWindow(true);
 
-	TutorialGame* g = new TutorialGame();
-	TestPathfinding();
+	TutorialGame* g = new LevelTwo();
 	w->GetTimer()->GetTimeDeltaSeconds(); //Clear the timer so we don't get a larget first dt!
 	while (w->UpdateWindow() && !Window::GetKeyboard()->KeyDown(KeyboardKeys::ESCAPE)) {
 		float dt = w->GetTimer()->GetTimeDeltaSeconds();
@@ -78,7 +79,6 @@ int main() {
 		if (Window::GetKeyboard()->KeyPressed(KeyboardKeys::T)) {
 			w->SetWindowPosition(0, 0);
 		}
-		//DisplayPathfinding();
 		w->SetTitle("Gametech frame time:" + std::to_string(1000.0f * dt));
 
 		g->UpdateGame(dt);

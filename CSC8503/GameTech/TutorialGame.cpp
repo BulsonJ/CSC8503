@@ -17,14 +17,12 @@ TutorialGame::TutorialGame()	{
 	renderer	= new GameTechRenderer(*world);
 	physics		= new PhysicsSystem(*world);
 
-	//physics->SetGlobalDamping(0.4f);
+	physics->SetGlobalDamping(0.4f);
 	forceMagnitude	= 10.0f;
 	useGravity		= false;
 	inSelectionMode = false;
 
 	Debug::SetRenderer(renderer);
-
-	InitialiseAssets();
 }
 
 /*
@@ -261,10 +259,6 @@ void TutorialGame::InitCamera() {
 void TutorialGame::InitWorld() {
 	world->ClearAndErase();
 	physics->Clear();
-
-	if (grid == nullptr) {
-		grid = new NavigationGrid("TestGrid2.txt");
-	}
 
 	BridgeConstraintTest();
 	InitMixedGridWorld(5, 5, 3.5f, 3.5f);

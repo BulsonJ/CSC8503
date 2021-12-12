@@ -20,7 +20,7 @@ namespace NCL {
 			void InitCamera();
 			void UpdateKeys();
 
-			void InitWorld();
+			virtual void InitWorld() = 0;
 
 			void InitGameExamples();
 
