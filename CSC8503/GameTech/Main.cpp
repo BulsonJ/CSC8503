@@ -4,7 +4,10 @@
 #include "../CSC8503Common/StateTransition.h"
 #include "../CSC8503Common/State.h"
 
+#include "../CSC8503Common/PushdownState.h"
+
 #include "../CSC8503Common/NavigationGrid.h"
+
 
 #include "TutorialGame.h"
 #include "LevelOne.h"
@@ -13,32 +16,71 @@
 using namespace NCL;
 using namespace CSC8503;
 
-vector <Vector3 > testNodes;
-void TestPathfinding() {
-	NavigationGrid grid("TestGrid1.txt");
-	
-	NavigationPath outPath;
-	
-	Vector3 startPos(80, 0, 10);
-	Vector3 endPos(80, 0, 80);
-	
-	bool found = grid.FindPath(startPos, endPos, outPath);
-	
-	Vector3 pos;
-	while (outPath.PopWaypoint(pos)) {
-		testNodes.push_back(pos);
+class PauseScreen : public PushdownState {
+	PushdownResult OnUpdate(float dt, PushdownState * *newState) override {
+		if (Window::GetKeyboard()->KeyPressed(KeyboardKeys::U)) {
+			return PushdownResult::Pop;
+		}
+		return PushdownResult::NoChange;
 	}
-}
+	void OnAwake() override {
+		std::cout << "Press U to unpause game!\n";
+	}
+};
 
-void DisplayPathfinding() {
-	for (int i = 1; i < testNodes.size(); ++i) {
-		Vector3 a = testNodes[i - 1];
-		Vector3 b = testNodes[i];
+
+class GameScreen : public PushdownState {
+	PushdownResult OnUpdate(float dt,
+		PushdownState * *newState) override {
+		pauseReminder -= dt;
+		if (pauseReminder < 0) {
+			std::cout << "Coins mined: " << coinsMined << "\n";
+			std::cout << "Press P to pause game , or F1 to return to main menu!\n";
+				pauseReminder += 1.0f;
+		}
+		if (Window::GetKeyboard()->KeyDown(KeyboardKeys::P)) {
+			* newState = new PauseScreen();
+			return PushdownResult::Push;
+		}
+		if (Window::GetKeyboard()->KeyDown(KeyboardKeys::F1)) {
+			std::cout << "Returning to main menu!\n";
+			return PushdownResult::Pop;
+		}
+		if (rand() % 7 == 0) {
+			coinsMined++;
+			
+		}
+		return PushdownResult::NoChange;
 		
-		Debug::DrawLine(a, b, Vector4(0, 1, 0, 1));
+	};
+	void OnAwake() override {
+		std::cout << "Preparing to mine coins!\n";
+		
 	}
-}
+protected:
+	int coinsMined = 0;
+	float pauseReminder = 1;
+	
+};
 
+class IntroScreen : public PushdownState {
+	PushdownResult OnUpdate(float dt,
+		PushdownState * *newState) override {
+		if (Window::GetKeyboard()->KeyPressed(KeyboardKeys::SPACE)) {
+			* newState = new GameScreen();
+			return PushdownResult::Push;
+		}
+		if (Window::GetKeyboard()->KeyPressed(KeyboardKeys::ESCAPE)) {
+			return PushdownResult::Pop;
+		}
+		return PushdownResult::NoChange;
+	};
+	
+	void OnAwake() override {
+		std::cout << "Welcome to a really awesome game!\n";
+		std::cout << "Press Space To Begin or escape to quit!\n";
+	}
+};
 /*
 
 The main function should look pretty familar to you!

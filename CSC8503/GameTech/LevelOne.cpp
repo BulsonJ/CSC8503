@@ -1,7 +1,8 @@
 #include "LevelOne.h"
 
 LevelOne::LevelOne() : TutorialGame() {
-	InitialiseAssets();
+	InitCamera();
+	InitWorld();
 }
 
 void LevelOne::InitWorld() {

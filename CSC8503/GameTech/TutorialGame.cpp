@@ -23,6 +23,8 @@ TutorialGame::TutorialGame()	{
 	inSelectionMode = false;
 
 	Debug::SetRenderer(renderer);
+
+	InitialiseAssets();
 }
 
 /*
@@ -49,9 +51,6 @@ void TutorialGame::InitialiseAssets() {
 
 	basicTex	= (OGLTexture*)TextureLoader::LoadAPITexture("checkerboard.png");
 	basicShader = new OGLShader("GameTechVert.glsl", "GameTechFrag.glsl");
-
-	InitCamera();
-	InitWorld();
 }
 
 TutorialGame::~TutorialGame()	{

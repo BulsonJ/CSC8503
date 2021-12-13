@@ -2,7 +2,8 @@
 #include "../CSC8503Common/NavigationGrid.h"
 
 LevelTwo::LevelTwo() : TutorialGame() {
-	InitialiseAssets();
+	InitCamera();
+	InitWorld();
 }
 
 void LevelTwo::InitWorld() {
