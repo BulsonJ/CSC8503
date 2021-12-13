@@ -5,6 +5,7 @@
 #include "../CSC8503Common/State.h"
 
 #include "../CSC8503Common/PushdownState.h"
+#include "../CSC8503Common/PushdownMachine.h"
 
 #include "../CSC8503Common/NavigationGrid.h"
 
@@ -12,6 +13,7 @@
 #include "TutorialGame.h"
 #include "LevelOne.h"
 #include "LevelTwo.h"
+#include "MainMenu.h"
 
 using namespace NCL;
 using namespace CSC8503;
@@ -30,9 +32,13 @@ class PauseScreen : public PushdownState {
 
 
 class GameScreen : public PushdownState {
-	PushdownResult OnUpdate(float dt,
-		PushdownState * *newState) override {
-		pauseReminder -= dt;
+public:
+	GameScreen(TutorialGame** g, TutorialGame* level) {
+		currentGame = g;
+		gameLevel = level;
+	}
+	PushdownResult OnUpdate(float dt, PushdownState * *newState) override {
+		/*pauseReminder -= dt;
 		if (pauseReminder < 0) {
 			std::cout << "Coins mined: " << coinsMined << "\n";
 			std::cout << "Press P to pause game , or F1 to return to main menu!\n";
@@ -42,44 +48,52 @@ class GameScreen : public PushdownState {
 			* newState = new PauseScreen();
 			return PushdownResult::Push;
 		}
+		*/
 		if (Window::GetKeyboard()->KeyDown(KeyboardKeys::F1)) {
 			std::cout << "Returning to main menu!\n";
 			return PushdownResult::Pop;
-		}
+		}/**
 		if (rand() % 7 == 0) {
 			coinsMined++;
 			
-		}
+		}*/
 		return PushdownResult::NoChange;
 		
 	};
 	void OnAwake() override {
-		std::cout << "Preparing to mine coins!\n";
-		
+		*currentGame = gameLevel;
 	}
 protected:
-	int coinsMined = 0;
-	float pauseReminder = 1;
+	TutorialGame** currentGame;
+	TutorialGame* gameLevel;
 	
 };
 
-class IntroScreen : public PushdownState {
-	PushdownResult OnUpdate(float dt,
-		PushdownState * *newState) override {
-		if (Window::GetKeyboard()->KeyPressed(KeyboardKeys::SPACE)) {
-			* newState = new GameScreen();
+class MenuScreen : public PushdownState {
+public:
+	MenuScreen(TutorialGame** g) {
+		currentGame = g;
+	};
+
+protected:
+	PushdownResult OnUpdate(float dt, PushdownState * *newState) override {
+		if (Window::GetKeyboard()->KeyPressed(KeyboardKeys::U)) {
+			* newState = new GameScreen(currentGame, new LevelOne());
 			return PushdownResult::Push;
 		}
-		if (Window::GetKeyboard()->KeyPressed(KeyboardKeys::ESCAPE)) {
-			return PushdownResult::Pop;
+		if (Window::GetKeyboard()->KeyPressed(KeyboardKeys::I)) {
+			*newState = new GameScreen(currentGame, new LevelTwo());
+			return PushdownResult::Push;
 		}
 		return PushdownResult::NoChange;
 	};
 	
 	void OnAwake() override {
-		std::cout << "Welcome to a really awesome game!\n";
-		std::cout << "Press Space To Begin or escape to quit!\n";
+		*currentGame = new MainMenu();
 	}
+
+
+	TutorialGame** currentGame;
 };
 /*
 
@@ -103,7 +117,11 @@ int main() {
 	w->ShowOSPointer(false);
 	w->LockMouseToWindow(true);
 
-	TutorialGame* g = new LevelTwo();
+	// Make menu screen
+	TutorialGame* g = new MainMenu();
+
+	PushdownMachine machine(new MenuScreen(&g));
+
 	w->GetTimer()->GetTimeDeltaSeconds(); //Clear the timer so we don't get a larget first dt!
 	while (w->UpdateWindow() && !Window::GetKeyboard()->KeyDown(KeyboardKeys::ESCAPE)) {
 		float dt = w->GetTimer()->GetTimeDeltaSeconds();
@@ -122,6 +140,9 @@ int main() {
 			w->SetWindowPosition(0, 0);
 		}
 		w->SetTitle("Gametech frame time:" + std::to_string(1000.0f * dt));
+
+		// Custom
+		if (!machine.Update(dt)) return 0;
 
 		g->UpdateGame(dt);
 	}

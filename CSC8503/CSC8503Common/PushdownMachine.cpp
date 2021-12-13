@@ -1,23 +1,39 @@
-#pragma once
-#include <stack >
+#include "PushdownMachine.h"
+#include "PushdownState.h"
+using namespace NCL::CSC8503;
 
-namespace NCL {
-	namespace CSC8503 {
-		class PushdownState;
-		class PushdownMachine {
-			public:
-				PushdownMachine(PushdownState * initialState) {
-					this->initialState = initialState;
+bool PushdownMachine::Update(float dt) {
+	if (activeState) {
+		PushdownState * newState = nullptr;
+		PushdownState::PushdownResult result
+			= activeState->OnUpdate(dt, &newState);
+		
+		switch (result) {
+			case PushdownState::Pop: {
+				activeState->OnSleep();
+				delete activeState;
+				stateStack.pop();
+				if (stateStack.empty()) {
+					return false;
+				}	else {
+					activeState = stateStack.top();
+					activeState->OnAwake();
 				}
-				~PushdownMachine() {}
+			} break;
+
+			case PushdownState::Push: {
+				activeState->OnSleep();
 				
-				bool Update(float dt);
-				
-			protected:
-				PushdownState * activeState;
-				PushdownState * initialState;
-				
-				std::stack <PushdownState*> stateStack;
-		};
+				 stateStack.push(newState);
+				activeState = newState;
+				activeState->OnAwake();
+				}break;
+		}
 	}
+	else {
+		stateStack.push(initialState);
+		activeState = initialState;
+		activeState->OnAwake();
+	}
+	return true;
 }
