@@ -12,6 +12,8 @@ namespace NCL {
 
 		static void DrawAxisLines(const Matrix4 &modelMatrix, float scaleBoost = 1.0f, float time = 0.0f);
 
+		static void DrawPath(std::vector<Vector3> path, const Vector4& colour = Vector4(0, 1, 0, 1));
+
 		static void SetRenderer(OGLRenderer* r) {
 			renderer = r;
 		}

@@ -14,11 +14,11 @@ void MainMenu::InitWorld() {
 }
 
 void MainMenu::UpdateGame(float dt) {
-	UpdateKeys();
 
 	Debug::Print("CSC 8503 Coursework", Vector2(30, 30));
 	Debug::Print("Level 1 - Press U", Vector2(30, 40));
 	Debug::Print("Level 2 - Press I", Vector2(30, 50));
+	Debug::Print("Exit - Press ESC", Vector2(30, 60));
 
 
 	world->UpdateWorld(dt);

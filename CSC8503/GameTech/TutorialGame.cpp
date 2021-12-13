@@ -105,19 +105,6 @@ void TutorialGame::UpdateGame(float dt) {
 		//Debug::DrawAxisLines(lockedObject->GetTransform().GetMatrix(), 2.0f);
 	}
 
-	for (auto it = enemies.begin(); it != enemies.end(); it++) {
-		EnemyGameObject* e = static_cast<EnemyGameObject*>(*it);
-		debugPath = e->GetPath();
-		if (debugPath.size() > 0) {
-			for (int i = 1; i < debugPath.size(); ++i) {
-				Vector3 a = debugPath[i - 1];
-				Vector3 b = debugPath[i];
-
-				Debug::DrawLine(a + Vector3(0, 1, 0), b + Vector3(0, 1, 0), Vector4(0, 1, 0, 1), 0.0f);
-			}
-		}
-	}
-
 	world->UpdateWorld(dt);
 	renderer->Update(dt);
 
@@ -593,11 +580,17 @@ bool TutorialGame::SelectObject() {
 
 	if (lockedObject) {
 		renderer->DrawString("Press L to unlock object!", Vector2(5, 80));
+
+		DrawDebugInfo(lockedObject);
+
 	}
 
 	else if(selectionObject){
 		renderer->DrawString("Press L to lock selected object object!", Vector2(5, 80));
+
+		DrawDebugInfo(selectionObject);
 	}
+
 
 	if (Window::GetKeyboard()->KeyPressed(NCL::KeyboardKeys::L)) {
 		if (selectionObject) {
@@ -612,6 +605,20 @@ bool TutorialGame::SelectObject() {
 	}
 
 	return false;
+}
+
+void TutorialGame::DrawDebugInfo(GameObject* object) {
+	// Draw position and rotation
+	Vector3 pos = object->GetTransform().GetPosition();
+	renderer->DrawString("Position: " + std::to_string(pos.x) + "," + std::to_string(pos.y) + "," + std::to_string(pos.z), Vector2(5, 5));
+	Vector3 rot = object->GetTransform().GetOrientation() * Vector3(0, 0, -1);
+	renderer->DrawString("Rotation: " + std::to_string(rot.x) + "," + std::to_string(rot.y) + "," + std::to_string(rot.z), Vector2(5, 10));
+
+	// Draw enemy debug information
+	EnemyGameObject* e = static_cast<EnemyGameObject*>(object);
+	if (e != nullptr) {
+		Debug::DrawPath(e->GetPath());
+	}
 }
 
 /*

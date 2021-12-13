@@ -82,6 +82,8 @@ namespace NCL {
 			NavigationGrid* grid;
 			vector<Vector3> debugPath;
 
+			void DrawDebugInfo(GameObject* object);
+
 		};
 	}
 }

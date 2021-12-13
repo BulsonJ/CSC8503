@@ -55,6 +55,17 @@ void Debug::DrawAxisLines(const Matrix4& modelMatrix, float scaleBoost, float ti
 	DrawLine(worldPos, worldPos + (fwd * scaleBoost)	, Debug::BLUE, time);
 }
 
+void Debug::DrawPath(std::vector<Vector3> path, const Vector4& colour) {
+	if (path.size() > 0) {
+		for (int i = 1; i < path.size(); ++i) {
+			Vector3 a = path[i - 1];
+			Vector3 b = path[i];
+
+			Debug::DrawLine(a + Vector3(0, 1, 0), b + Vector3(0, 1, 0), colour, 0.0f);
+		}
+	}
+}
+
 
 void Debug::FlushRenderables(float dt) {
 	if (!renderer) {
