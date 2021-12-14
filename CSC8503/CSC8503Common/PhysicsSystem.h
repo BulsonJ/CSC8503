@@ -26,6 +26,7 @@ namespace NCL {
 			void BasicCollisionDetection();
 			void BroadPhase();
 			void NarrowPhase();
+			void GameplayPhase();
 
 			void ClearForces();
 

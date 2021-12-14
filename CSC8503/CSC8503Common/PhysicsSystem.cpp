@@ -20,8 +20,8 @@ and the forces that are added to objects to change those positions
 */
 
 PhysicsSystem::PhysicsSystem(GameWorld& g) : gameWorld(g)	{
-	applyGravity	= false;
-	useBroadPhase	= false;	
+	applyGravity	= true;
+	useBroadPhase	= true;	
 	dTOffset		= 0.0f;
 	globalDamping	= 0.995f;
 	SetGravity(Vector3(0.0f, -9.8f, 0.0f));
@@ -96,6 +96,7 @@ void PhysicsSystem::Update(float dt) {
 		if (useBroadPhase) {
 			BroadPhase();
 			NarrowPhase();
+			GameplayPhase();
 		}
 		else {
 			BasicCollisionDetection();
@@ -326,9 +327,17 @@ void PhysicsSystem::NarrowPhase() {
 		if (CollisionDetection::ObjectIntersection(info.a, info.b, info)) {
 			info.framesLeft = numCollisionFrames;
 			ImpulseResolveCollision(*info.a, *info.b, info.point);
-			GameplayResolveCollision(*info.a, *info.b);
 			allCollisions.insert(info); // insert into our main set
 		}
+	}
+}
+
+void PhysicsSystem::GameplayPhase() {
+	for (std::set <CollisionDetection::CollisionInfo >::iterator
+		i = allCollisions.begin();
+		i != allCollisions.end(); ++i) {
+		CollisionDetection::CollisionInfo info = *i;
+		GameplayResolveCollision(*info.a, *info.b);
 	}
 }
 
