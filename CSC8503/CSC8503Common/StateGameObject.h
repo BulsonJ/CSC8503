@@ -14,6 +14,12 @@ namespace NCL {
 			void MoveLeft(float dt);
 			void MoveRight(float dt);
 
+			virtual void OnCollisionBegin(GameObject* otherObject) {
+				if (otherObject->GetCollisionLayer() == CollisionLayer::Player) {
+					toDelete = true;
+				}
+			}
+
 			StateMachine * stateMachine;
 			float counter;
 		};

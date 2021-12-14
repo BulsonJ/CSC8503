@@ -7,6 +7,7 @@ GameObject::GameObject(string objectName)	{
 	name			= objectName;
 	worldID			= -1;
 	isActive		= true;
+	toDelete = false;
 	boundingVolume	= nullptr;
 	physicsObject	= nullptr;
 	renderObject	= nullptr;

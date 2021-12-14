@@ -337,18 +337,8 @@ void PhysicsSystem::GameplayPhase() {
 		i = allCollisions.begin();
 		i != allCollisions.end(); ++i) {
 		CollisionDetection::CollisionInfo info = *i;
-		GameplayResolveCollision(*info.a, *info.b);
+		//GameplayResolveCollision(*info.a, *info.b);
 	}
-}
-
-void PhysicsSystem::GameplayResolveCollision(GameObject& a, GameObject& b)  const{
-	if (a.GetCollisionLayer() == CollisionLayer::Coins && b.GetCollisionLayer() == CollisionLayer::Player) {
-		gameWorld.RemoveGameObject(&a);
-	}
-	if (a.GetCollisionLayer() == CollisionLayer::Player && b.GetCollisionLayer() == CollisionLayer::Coins) {
-		gameWorld.RemoveGameObject(&b);
-	}
-
 }
 
 /*

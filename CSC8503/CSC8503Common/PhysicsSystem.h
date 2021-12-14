@@ -39,7 +39,6 @@ namespace NCL {
 			void UpdateObjectAABBs();
 
 			void ImpulseResolveCollision(GameObject& a , GameObject&b, CollisionDetection::ContactPoint& p) const;
-			void GameplayResolveCollision(GameObject& a, GameObject& b) const;
 
 			GameWorld& gameWorld;
 

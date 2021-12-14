@@ -38,6 +38,10 @@ namespace NCL {
 				return isActive;
 			}
 
+			bool ToDelete() const {
+				return toDelete;
+			}
+
 			Transform& GetTransform() {
 				return transform;
 			}
@@ -63,11 +67,11 @@ namespace NCL {
 			}
 
 			virtual void OnCollisionBegin(GameObject* otherObject) {
-				//std::cout << "OnCollisionBegin event occured!\n";
+				
 			}
 
 			virtual void OnCollisionEnd(GameObject* otherObject) {
-				//std::cout << "OnCollisionEnd event occured!\n";
+
 			}
 
 			bool GetBroadphaseAABB(Vector3&outsize) const;
@@ -100,6 +104,7 @@ namespace NCL {
 			RenderObject*		renderObject;
 
 			bool	isActive;
+			bool toDelete;
 			int		worldID;
 			string	name;
 

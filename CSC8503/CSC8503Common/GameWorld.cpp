@@ -63,6 +63,7 @@ void GameWorld::OperateOnContents(GameObjectFunc f) {
 void GameWorld::UpdateWorld(float dt) {
 	for (auto it = gameObjects.begin(); it != gameObjects.end(); it++) {
 		(*it)->Update(dt);
+		if ((*it)->ToDelete() == true) RemoveGameObject(*it, true);
 	}
 	
 	if (shuffleObjects) {
