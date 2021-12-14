@@ -12,11 +12,11 @@ using std::vector;
 namespace NCL {
 	namespace CSC8503 {
 		enum class CollisionLayer {
-			One = 1,
-			Two = 2,
-			Three = 4,
-			Four = 8,
-			Five = 16,
+			Default = 1,
+			Wall = 2,
+			Player = 4,
+			Enemy = 8,
+			Coins = 16,
 			Six = 32,
 			UI = 256
 		};

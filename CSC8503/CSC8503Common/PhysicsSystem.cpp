@@ -326,9 +326,20 @@ void PhysicsSystem::NarrowPhase() {
 		if (CollisionDetection::ObjectIntersection(info.a, info.b, info)) {
 			info.framesLeft = numCollisionFrames;
 			ImpulseResolveCollision(*info.a, *info.b, info.point);
+			GameplayResolveCollision(*info.a, *info.b);
 			allCollisions.insert(info); // insert into our main set
 		}
 	}
+}
+
+void PhysicsSystem::GameplayResolveCollision(GameObject& a, GameObject& b)  const{
+	if (a.GetCollisionLayer() == CollisionLayer::Coins && b.GetCollisionLayer() == CollisionLayer::Player) {
+		gameWorld.RemoveGameObject(&a);
+	}
+	if (a.GetCollisionLayer() == CollisionLayer::Player && b.GetCollisionLayer() == CollisionLayer::Coins) {
+		gameWorld.RemoveGameObject(&b);
+	}
+
 }
 
 /*

@@ -10,7 +10,7 @@ GameObject::GameObject(string objectName)	{
 	boundingVolume	= nullptr;
 	physicsObject	= nullptr;
 	renderObject	= nullptr;
-	collisionLayer  = CollisionLayer::One;
+	collisionLayer  = CollisionLayer::Default;
 }
 
 GameObject::~GameObject()	{

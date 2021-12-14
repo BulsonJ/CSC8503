@@ -1,6 +1,4 @@
-﻿  CollisionDetection.cpp
-  Debug.cpp
-  GameWorld.cpp
+﻿  GameWorld.cpp
   PhysicsObject.cpp
   PhysicsSystem.cpp
   QuadTree.cpp

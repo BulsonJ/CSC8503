@@ -1,9 +1,3 @@
-﻿  GameTechRenderer.cpp
-  LevelOne.cpp
-  LevelTwo.cpp
-  Main.cpp
+﻿  Main.cpp
 C:\Files\University\Technologies\8503-Release-2021\CSC8503\GameTech\Main.cpp(116,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  MainMenu.cpp
-  TutorialGame.cpp
-  Generating Code...
   GameTech.vcxproj -> C:\Files\University\Technologies\8503-Release-2021\x64\Debug\GameTech.exe

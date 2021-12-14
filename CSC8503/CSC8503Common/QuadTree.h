@@ -77,7 +77,7 @@ namespace NCL {
 
 			void Split() {
 				Vector3 halfSize = size / 2.0f;
-				children = new QuadTreeNode <T >[4];
+				children = new QuadTreeNode <T >[8];
 				children[0] = QuadTreeNode <T>(position +
 					Vector3(-halfSize.x, halfSize.y, halfSize.z), halfSize);
 				children[1] = QuadTreeNode <T>(position +

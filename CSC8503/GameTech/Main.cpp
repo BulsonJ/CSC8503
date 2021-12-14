@@ -77,11 +77,11 @@ public:
 
 protected:
 	PushdownResult OnUpdate(float dt, PushdownState * *newState) override {
-		if (Window::GetKeyboard()->KeyPressed(KeyboardKeys::U)) {
+		if (Window::GetKeyboard()->KeyPressed(KeyboardKeys::NUM1)) {
 			* newState = new GameScreen(currentGame, new LevelOne());
 			return PushdownResult::Push;
 		}
-		if (Window::GetKeyboard()->KeyPressed(KeyboardKeys::I)) {
+		if (Window::GetKeyboard()->KeyPressed(KeyboardKeys::NUM2)) {
 			*newState = new GameScreen(currentGame, new LevelTwo());
 			return PushdownResult::Push;
 		}

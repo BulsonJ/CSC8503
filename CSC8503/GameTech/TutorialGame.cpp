@@ -457,6 +457,7 @@ GameObject* TutorialGame::AddPlayerToWorld(const Vector3& position) {
 
 	character->GetPhysicsObject()->SetInverseMass(inverseMass);
 	character->GetPhysicsObject()->InitSphereInertia();
+	character->SetCollisionLayer(CollisionLayer::Player);
 
 	world->AddGameObject(character);
 	player = character;
@@ -484,6 +485,7 @@ GameObject* TutorialGame::AddEnemyToWorld(const Vector3& position) {
 
 	character->GetPhysicsObject()->SetInverseMass(inverseMass);
 	character->GetPhysicsObject()->InitSphereInertia();
+	character->SetCollisionLayer(CollisionLayer::Enemy);
 
 	world->AddGameObject(character);
 	enemies.emplace_back(character);
@@ -504,6 +506,8 @@ GameObject* TutorialGame::AddBonusToWorld(const Vector3& position) {
 
 	apple->GetPhysicsObject()->SetInverseMass(1.0f);
 	apple->GetPhysicsObject()->InitSphereInertia();
+
+	apple->SetCollisionLayer(CollisionLayer::Coins);
 
 	world->AddGameObject(apple);
 
@@ -615,8 +619,8 @@ void TutorialGame::DrawDebugInfo(GameObject* object) {
 	renderer->DrawString("Rotation: " + std::to_string(rot.x) + "," + std::to_string(rot.y) + "," + std::to_string(rot.z), Vector2(5, 10));
 
 	// Draw enemy debug information
-	EnemyGameObject* e = static_cast<EnemyGameObject*>(object);
-	if (e != nullptr) {
+	EnemyGameObject* e = dynamic_cast<EnemyGameObject*>(object);
+	if (e) {
 		Debug::DrawPath(e->GetPath());
 	}
 }
