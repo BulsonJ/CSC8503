@@ -71,7 +71,9 @@ namespace NCL {
 			}
 
 			virtual void OnCollisionEnd(GameObject* otherObject) {
-
+				if (otherObject->GetCollisionLayer() == CollisionLayer::Player) {
+					toDelete = true;
+				}
 			}
 
 			bool GetBroadphaseAABB(Vector3&outsize) const;

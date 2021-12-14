@@ -63,7 +63,6 @@ void GameWorld::OperateOnContents(GameObjectFunc f) {
 void GameWorld::UpdateWorld(float dt) {
 	for (auto it = gameObjects.begin(); it != gameObjects.end(); it++) {
 		(*it)->Update(dt);
-		if ((*it)->ToDelete() == true) RemoveGameObject(*it, true);
 	}
 	
 	if (shuffleObjects) {
@@ -74,6 +73,10 @@ void GameWorld::UpdateWorld(float dt) {
 		std::random_shuffle(constraints.begin(), constraints.end());
 	}
 	UpdateObjectRaycasts();
+}
+
+void GameWorld::DeleteObjects() {
+	
 }
 
 bool GameWorld::Raycast(Ray& r, RayCollision& closestCollision, bool closestObject) const {

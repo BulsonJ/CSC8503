@@ -376,6 +376,7 @@ GameObject* TutorialGame::AddCubeToWorld(const Vector3& position, Vector3 dimens
 
 	cube->GetPhysicsObject()->SetInverseMass(inverseMass);
 	cube->GetPhysicsObject()->InitCubeInertia();
+	cube->SetCollisionLayer(CollisionLayer::Wall);
 
 	world->AddGameObject(cube);
 

@@ -20,6 +20,10 @@ namespace NCL {
 				}
 			}
 
+			virtual void OnCollisionEnd(GameObject* otherObject) {
+				
+			}
+
 			StateMachine * stateMachine;
 			float counter;
 		};

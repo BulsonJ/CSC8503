@@ -28,6 +28,9 @@
     <Filter Include="Objects">
       <UniqueIdentifier>{6a267146-2c65-4a38-b67c-1e4170e5b17f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Physics\Constraints">
+      <UniqueIdentifier>{2aaa358f-7efb-44d1-9aa1-de82a9235609}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameWorld.h">
@@ -105,14 +108,17 @@
     <ClInclude Include="CapsuleVolume.h">
       <Filter>CollisionDetection</Filter>
     </ClInclude>
-    <ClInclude Include="PositionConstraint.h">
-      <Filter>Physics</Filter>
-    </ClInclude>
     <ClInclude Include="StateGameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EnemyGameObject.h">
       <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="PositionConstraint.h">
+      <Filter>Physics\Constraints</Filter>
+    </ClInclude>
+    <ClInclude Include="HingeConstraint.h">
+      <Filter>Physics\Constraints</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -161,14 +167,17 @@
     <ClCompile Include="QuadTree.cpp">
       <Filter>CollisionDetection</Filter>
     </ClCompile>
-    <ClCompile Include="PositionConstraint.cpp">
-      <Filter>Physics</Filter>
-    </ClCompile>
     <ClCompile Include="StateGameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="EnemyGameObject.cpp">
       <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="PositionConstraint.cpp">
+      <Filter>Physics\Constraints</Filter>
+    </ClCompile>
+    <ClCompile Include="HingeConstraint.cpp">
+      <Filter>Physics\Constraints</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -135,6 +135,7 @@
     <ClInclude Include="AABBVolume.h" />
     <ClInclude Include="CapsuleVolume.h" />
     <ClInclude Include="EnemyGameObject.h" />
+    <ClInclude Include="HingeConstraint.h" />
     <ClInclude Include="NavigationGrid.h" />
     <ClInclude Include="NavigationMap.h" />
     <ClInclude Include="NavigationMesh.h" />
@@ -167,6 +168,7 @@
     <ClCompile Include="EnemyGameObject.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameWorld.cpp" />
+    <ClCompile Include="HingeConstraint.cpp" />
     <ClCompile Include="NavigationGrid.cpp" />
     <ClCompile Include="NavigationMesh.cpp" />
     <ClCompile Include="PositionConstraint.cpp" />

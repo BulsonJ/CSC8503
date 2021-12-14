@@ -54,6 +54,7 @@ namespace NCL {
 				std::vector<Constraint*>::const_iterator& last) const;
 
 			void UpdateObjectRaycasts();
+			void DeleteObjects();
 
 		protected:
 			std::vector<GameObject*> gameObjects;
