@@ -1,15 +1,2 @@
 ﻿  CollisionDetection.cpp
-  EnemyGameObject.cpp
-  GameObject.cpp
-  GameWorld.cpp
-  PhysicsObject.cpp
-  PhysicsSystem.cpp
-  PositionConstraint.cpp
-  QuadTree.cpp
-  StateGameObject.cpp
-  Generating Code...
-C:\Files\University\Technologies\8503-Release-2021\CSC8503\CSC8503Common\EnemyGameObject.cpp(45): warning C4715: '<lambda_6134137bbee93ee078524d4c34cf9be0>::operator()': not all control paths return a value
-C:\Files\University\Technologies\8503-Release-2021\CSC8503\CSC8503Common\EnemyGameObject.cpp(54): warning C4715: '<lambda_2aea887649ad562bd54f1e54bae925ea>::operator()': not all control paths return a value
-C:\Files\University\Technologies\8503-Release-2021\CSC8503\CSC8503Common\EnemyGameObject.cpp(72): warning C4715: '<lambda_07a27380ddf9d3152d4c4c3d089d4ab8>::operator()': not all control paths return a value
-C:\Files\University\Technologies\8503-Release-2021\CSC8503\CSC8503Common\EnemyGameObject.cpp(63): warning C4715: '<lambda_6caf331486492f633c58b5217de331ab>::operator()': not all control paths return a value
   CSC8503Common.vcxproj -> C:\Files\University\Technologies\8503-Release-2021\x64\Debug\CSC8503Common.lib

@@ -7,5 +7,8 @@ public:
 	
 protected:
 	virtual void InitWorld();
+	virtual void ResetGame();
+
+	GameObject* AddSeesawToWorld(const Vector3& position, Vector3 dimensions, float inverseMass);
 };
 

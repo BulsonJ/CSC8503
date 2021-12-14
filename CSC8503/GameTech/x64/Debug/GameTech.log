@@ -1,13 +1,1 @@
-﻿  GameTechRenderer.cpp
-  LevelOne.cpp
-  LevelTwo.cpp
-  Main.cpp
-C:\Files\University\Technologies\8503-Release-2021\CSC8503\GameTech\Main.cpp(116,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  MainMenu.cpp
-  TutorialGame.cpp
-C:\Files\University\Technologies\8503-Release-2021\CSC8503\GameTech\TutorialGame.cpp(460,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Files\University\Technologies\8503-Release-2021\CSC8503\GameTech\TutorialGame.cpp(460,39): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Files\University\Technologies\8503-Release-2021\CSC8503\GameTech\TutorialGame.cpp(460,31): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Files\University\Technologies\8503-Release-2021\CSC8503\GameTech\TutorialGame.cpp(461,42): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  Generating Code...
-  GameTech.vcxproj -> C:\Files\University\Technologies\8503-Release-2021\x64\Debug\GameTech.exe
+﻿  GameTech.vcxproj -> C:\Files\University\Technologies\8503-Release-2021\x64\Debug\GameTech.exe

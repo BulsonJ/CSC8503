@@ -8,5 +8,6 @@ public:
 protected:
 	virtual void InitWorld();
 	virtual void UpdateGame(float dt) override;
+	virtual void ResetGame() {};
 };
 

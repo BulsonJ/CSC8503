@@ -21,6 +21,7 @@ namespace NCL {
 			void UpdateKeys();
 
 			virtual void InitWorld() = 0;
+			virtual void ResetGame() = 0;
 
 			void InitGameExamples();
 
