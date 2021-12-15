@@ -596,6 +596,10 @@ bool CollisionDetection::OBBSphereIntersection(
 	
 	bool collided = AABBSphereIntersection(AABBVolume(volumeA.GetHalfDimensions()), one, volumeB, two, collisionInfo);
 
+	if (collided) {
+		collisionInfo.point.normal = transform * collisionInfo.point.normal;
+	}
+
 	return collided;
 }
 

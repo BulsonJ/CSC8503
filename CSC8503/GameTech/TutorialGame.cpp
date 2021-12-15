@@ -70,6 +70,10 @@ TutorialGame::~TutorialGame()	{
 }
 
 void TutorialGame::UpdateGame(float dt) {
+	if (physics->CheckResetGame() == true) {
+		ResetGame();
+	}
+
 	if (!inSelectionMode) {
 		world->GetMainCamera()->UpdateCamera(dt);
 	}
@@ -297,6 +301,7 @@ GameObject* TutorialGame::AddFloorToWorld(const Vector3& position) {
 	floor->GetTransform()
 		.SetScale(floorSize * 2)
 		.SetPosition(position);
+	floor->SetCollisionLayer(CollisionLayer::Six);
 
 	floor->SetRenderObject(new RenderObject(&floor->GetTransform(), cubeMesh, basicTex, basicShader));
 	floor->SetPhysicsObject(new PhysicsObject(&floor->GetTransform(), floor->GetBoundingVolume()));
@@ -364,6 +369,29 @@ GameObject* TutorialGame::AddCubeToWorld(const Vector3& position, Vector3 dimens
 	GameObject* cube = new GameObject();
 
 	AABBVolume* volume = new AABBVolume(dimensions);
+
+	cube->SetBoundingVolume((CollisionVolume*)volume);
+
+	cube->GetTransform()
+		.SetPosition(position)
+		.SetScale(dimensions * 2);
+
+	cube->SetRenderObject(new RenderObject(&cube->GetTransform(), cubeMesh, basicTex, basicShader));
+	cube->SetPhysicsObject(new PhysicsObject(&cube->GetTransform(), cube->GetBoundingVolume()));
+
+	cube->GetPhysicsObject()->SetInverseMass(inverseMass);
+	cube->GetPhysicsObject()->InitCubeInertia();
+	cube->SetCollisionLayer(CollisionLayer::Wall);
+
+	world->AddGameObject(cube);
+
+	return cube;
+}
+
+GameObject* TutorialGame::AddOBBCubeToWorld(const Vector3& position, Vector3 dimensions, float inverseMass) {
+	GameObject* cube = new GameObject();
+
+	OBBVolume* volume = new OBBVolume(dimensions);
 
 	cube->SetBoundingVolume((CollisionVolume*)volume);
 
@@ -457,7 +485,7 @@ GameObject* TutorialGame::AddPlayerToWorld(const Vector3& position) {
 	*/
 	//character->SetPhysicsObject(new PhysicsObject(&character->GetTransform(), character->GetBoundingVolume()));
 
-	int radius = 1;
+	int radius = 2;
 	Vector3 sphereSize = Vector3(radius, radius, radius);
 	SphereVolume* volume = new SphereVolume(radius);
 	character->SetBoundingVolume((CollisionVolume*)volume);

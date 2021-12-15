@@ -10,5 +10,7 @@ protected:
 	virtual void ResetGame();
 
 	GameObject* AddSeesawToWorld(const Vector3& position, Vector3 dimensions, float inverseMass);
+	GameObject* AddHammerToWorld(const Vector3& position, Vector3 dimensions, float inverseMass);
+	void AddBridge();
 };
 
