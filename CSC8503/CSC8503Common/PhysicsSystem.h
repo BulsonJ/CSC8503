@@ -24,7 +24,10 @@ namespace NCL {
 			void SetGravity(const Vector3& g);
 
 			void SetResetGame(bool s) { resetGame = s; }
-			bool CheckResetGame() { return resetGame; }
+			bool GetResetGame() { return resetGame; }
+
+			void SetEndGame(bool s) { endGame = s; }
+			bool GetEndGame() { return endGame; }
 		protected:
 			void BasicCollisionDetection();
 			void BroadPhase();
@@ -59,6 +62,7 @@ namespace NCL {
 			int numCollisionFrames	= 5;
 
 			bool resetGame = false;
+			bool endGame = false;
 		};
 	}
 }

@@ -39,6 +39,14 @@ namespace NCL {
 				return inverseMass;
 			}
 
+			void SetFriction(float f) {
+				friction = f;
+			}
+
+			float GetFriction() const {
+				return friction;
+			}
+
 			void ApplyAngularImpulse(const Vector3& force);
 			void ApplyLinearImpulse(const Vector3& force);
 			

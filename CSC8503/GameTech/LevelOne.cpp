@@ -38,10 +38,13 @@ void LevelOne::InitWorld() {
 	// Ice
 
 	GameObject* ice = AddCubeToWorld(Vector3(25, 9, -42.5), Vector3(20, 1, 10), 0.0f);
+	ice->GetPhysicsObject()->SetElasticity(0.8f);
+	ice->GetPhysicsObject()->SetFriction(200.0f);
 
 	// Finish
 	AddCubeToWorld(Vector3(50, 5, -42.5), Vector3(5, 5, 10), 0.0f);
-	AddCubeToWorld(Vector3(55, 11, -42.5), Vector3(1, 1, 10), 0.0f);
+	GameObject* finish = AddCubeToWorld(Vector3(55, 11, -42.5), Vector3(1, 1, 10), 0.0f);
+	finish->SetCollisionLayer(CollisionLayer::Finish);
 
 	//AddBonusToWorld(Vector3(10, 5, 0));
 
@@ -53,6 +56,13 @@ void LevelOne::ResetGame() {
 	player->GetTransform()
 		.SetPosition(Vector3(0, 25, 0));
 	player->GetPhysicsObject()->SetLinearVelocity(Vector3(0, 0, 0));
+}
+
+
+void LevelOne::FinishGame() {
+	physics->SetResetGame(false);
+	physics->SetEndGame(false);
+	//gameEnded = true;
 }
 
 GameObject* LevelOne::AddSeesawToWorld(const Vector3& position, Vector3 dimensions, float inverseMass) {

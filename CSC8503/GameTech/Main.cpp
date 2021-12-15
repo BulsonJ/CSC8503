@@ -38,25 +38,10 @@ public:
 		gameLevel = level;
 	}
 	PushdownResult OnUpdate(float dt, PushdownState * *newState) override {
-		/*pauseReminder -= dt;
-		if (pauseReminder < 0) {
-			std::cout << "Coins mined: " << coinsMined << "\n";
-			std::cout << "Press P to pause game , or F1 to return to main menu!\n";
-				pauseReminder += 1.0f;
-		}
-		if (Window::GetKeyboard()->KeyDown(KeyboardKeys::P)) {
-			* newState = new PauseScreen();
-			return PushdownResult::Push;
-		}
-		*/
-		if (Window::GetKeyboard()->KeyDown(KeyboardKeys::F1)) {
+		if (Window::GetKeyboard()->KeyDown(KeyboardKeys::F1) || (*currentGame)->GetEndGame() == true) {
 			std::cout << "Returning to main menu!\n";
 			return PushdownResult::Pop;
-		}/**
-		if (rand() % 7 == 0) {
-			coinsMined++;
-			
-		}*/
+		}
 		return PushdownResult::NoChange;
 		
 	};

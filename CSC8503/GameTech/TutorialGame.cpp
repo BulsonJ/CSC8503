@@ -17,7 +17,7 @@ TutorialGame::TutorialGame()	{
 	renderer	= new GameTechRenderer(*world);
 	physics		= new PhysicsSystem(*world);
 
-	physics->SetGlobalDamping(0.4f);
+	physics->SetGlobalDamping(0.9f);
 	forceMagnitude	= 10.0f;
 	useGravity		= false;
 	inSelectionMode = false;
@@ -70,8 +70,12 @@ TutorialGame::~TutorialGame()	{
 }
 
 void TutorialGame::UpdateGame(float dt) {
-	if (physics->CheckResetGame() == true) {
+	if (physics->GetResetGame() == true) {
 		ResetGame();
+	}
+
+	if (physics->GetEndGame() == true) {
+		FinishGame();
 	}
 
 	if (!inSelectionMode) {
@@ -301,7 +305,7 @@ GameObject* TutorialGame::AddFloorToWorld(const Vector3& position) {
 	floor->GetTransform()
 		.SetScale(floorSize * 2)
 		.SetPosition(position);
-	floor->SetCollisionLayer(CollisionLayer::Six);
+	floor->SetCollisionLayer(CollisionLayer::Floor);
 
 	floor->SetRenderObject(new RenderObject(&floor->GetTransform(), cubeMesh, basicTex, basicShader));
 	floor->SetPhysicsObject(new PhysicsObject(&floor->GetTransform(), floor->GetBoundingVolume()));

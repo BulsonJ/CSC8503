@@ -14,6 +14,9 @@ namespace NCL {
 
 			virtual void UpdateGame(float dt);
 
+			void SetEndGame(bool s) { gameEnded = s; }
+			bool GetEndGame() { return gameEnded; }
+
 		protected:
 			void InitialiseAssets();
 
@@ -22,6 +25,7 @@ namespace NCL {
 
 			virtual void InitWorld() = 0;
 			virtual void ResetGame() = 0;
+			virtual void FinishGame() = 0;
 
 			void InitGameExamples();
 
@@ -83,6 +87,8 @@ namespace NCL {
 			vector<GameObject*> enemies;
 			NavigationGrid* grid;
 			vector<Vector3> debugPath;
+
+			bool gameEnded = false;
 
 			void DrawDebugInfo(GameObject* object);
 

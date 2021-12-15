@@ -267,7 +267,7 @@ void PhysicsSystem::ImpulseResolveCollision(GameObject& a, GameObject& b, Collis
 	Vector3 fullImpulse = p.normal * j;
 
 	physA->ApplyLinearImpulse(-fullImpulse);
-	physB->ApplyLinearImpulse(fullImpulse);
+	physB->ApplyLinearImpulse(fullImpulse );
 	
 	physA->ApplyAngularImpulse(Vector3::Cross(relativeA, -fullImpulse));
 	
@@ -330,9 +330,13 @@ void PhysicsSystem::NarrowPhase() {
 				ImpulseResolveCollision(*info.a, *info.b, info.point);
 				allCollisions.insert(info); // insert into our main set
 
-				if ((info.a->GetCollisionLayer() == CollisionLayer::Player && info.b->GetCollisionLayer() == CollisionLayer::Six)||
-					(info.b->GetCollisionLayer() == CollisionLayer::Player && info.a->GetCollisionLayer() == CollisionLayer::Six)){
+				if ((info.a->GetCollisionLayer() == CollisionLayer::Player && info.b->GetCollisionLayer() == CollisionLayer::Floor)||
+					(info.b->GetCollisionLayer() == CollisionLayer::Player && info.a->GetCollisionLayer() == CollisionLayer::Floor)){
 					resetGame = true;
+				}
+				if ((info.a->GetCollisionLayer() == CollisionLayer::Player && info.b->GetCollisionLayer() == CollisionLayer::Finish) ||
+					(info.b->GetCollisionLayer() == CollisionLayer::Player && info.a->GetCollisionLayer() == CollisionLayer::Finish)) {
+					endGame = true;
 				}
 			}
 		}

@@ -8,5 +8,6 @@ public:
 protected:
 	virtual void InitWorld();
 	virtual void ResetGame();
+	virtual void FinishGame();
 };
 

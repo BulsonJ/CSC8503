@@ -27,3 +27,8 @@ void LevelTwo::ResetGame() {
 	player->GetTransform()
 		.SetPosition(Vector3(80, 0, 10));
 }
+
+void LevelTwo::FinishGame() {
+	player->GetTransform()
+		.SetPosition(Vector3(80, 0, 10));
+}

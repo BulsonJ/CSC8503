@@ -17,8 +17,9 @@ namespace NCL {
 			Player = 4,
 			Enemy = 8,
 			Coins = 16,
-			Six = 32,
-			UI = 256
+			Floor = 32,
+			UI = 256,
+			Finish = 512
 		};
 
 		class GameObject	{

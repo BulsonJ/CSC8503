@@ -9,5 +9,6 @@ protected:
 	virtual void InitWorld();
 	virtual void UpdateGame(float dt) override;
 	virtual void ResetGame() {};
+	virtual void FinishGame() {};
 };
 
