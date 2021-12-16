@@ -135,6 +135,7 @@
     <ClInclude Include="AABBVolume.h" />
     <ClInclude Include="CapsuleVolume.h" />
     <ClInclude Include="EnemyGameObject.h" />
+    <ClInclude Include="FinishObject.h" />
     <ClInclude Include="HingeConstraint.h" />
     <ClInclude Include="NavigationGrid.h" />
     <ClInclude Include="NavigationMap.h" />
@@ -142,7 +143,7 @@
     <ClInclude Include="NavigationPath.h" />
     <ClInclude Include="OBBVolume.h" />
     <ClInclude Include="PositionConstraint.h" />
-    <ClInclude Include="RotationConstraint.h" />
+    <ClInclude Include="ResetObject.h" />
     <ClInclude Include="SphereVolume.h" />
     <ClInclude Include="CollisionVolume.h" />
     <ClInclude Include="CollisionDetection.h" />
@@ -167,6 +168,7 @@
     <ClCompile Include="CollisionDetection.cpp" />
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="EnemyGameObject.cpp" />
+    <ClCompile Include="FinishObject.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameWorld.cpp" />
     <ClCompile Include="HingeConstraint.cpp" />
@@ -179,7 +181,7 @@
     <ClCompile Include="PushdownState.cpp" />
     <ClCompile Include="QuadTree.cpp" />
     <ClCompile Include="RenderObject.cpp" />
-    <ClCompile Include="RotationConstraint.cpp" />
+    <ClCompile Include="ResetObject.cpp" />
     <ClCompile Include="StateGameObject.cpp" />
     <ClCompile Include="StateMachine.cpp" />
     <ClCompile Include="StateTransition.cpp" />

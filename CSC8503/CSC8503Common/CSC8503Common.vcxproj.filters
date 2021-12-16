@@ -120,8 +120,11 @@
     <ClInclude Include="HingeConstraint.h">
       <Filter>Physics\Constraints</Filter>
     </ClInclude>
-    <ClInclude Include="RotationConstraint.h">
-      <Filter>Physics\Constraints</Filter>
+    <ClInclude Include="FinishObject.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="ResetObject.h">
+      <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -182,8 +185,11 @@
     <ClCompile Include="HingeConstraint.cpp">
       <Filter>Physics\Constraints</Filter>
     </ClCompile>
-    <ClCompile Include="RotationConstraint.cpp">
-      <Filter>Physics\Constraints</Filter>
+    <ClCompile Include="FinishObject.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="ResetObject.cpp">
+      <Filter>Objects</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

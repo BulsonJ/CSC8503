@@ -9,6 +9,9 @@
 #include "../CSC8503Common/EnemyGameObject.h"
 #include "../CSC8503Common/NavigationGrid.h"
 
+#include "../CSC8503Common/FinishObject.h"
+#include "../CSC8503Common/ResetObject.h"
+
 using namespace NCL;
 using namespace CSC8503;
 
@@ -70,12 +73,18 @@ TutorialGame::~TutorialGame()	{
 }
 
 void TutorialGame::UpdateGame(float dt) {
-	if (physics->GetResetGame() == true) {
-		ResetGame();
+	if (resetObject) {
+		if (resetObject->GetResetGame() == true) {
+			ResetGame();
+			resetObject->SetResetGame(false);
+		}
 	}
 
-	if (physics->GetEndGame() == true) {
-		FinishGame();
+	if (finishObject) {
+		if(finishObject->GetFinish() == true) {
+			FinishGame();
+			finishObject->SetFinish(false);
+		}
 	}
 
 	if (!inSelectionMode) {
@@ -280,7 +289,8 @@ A single function to add a large immoveable cube to the bottom of our world
 
 */
 GameObject* TutorialGame::AddFloorToWorld(const Vector3& position) {
-	GameObject* floor = new GameObject();
+	resetObject = new ResetObject();
+	GameObject* floor = resetObject;
 
 	Vector3 floorSize	= Vector3(100, 2, 100);
 	AABBVolume* volume	= new AABBVolume(floorSize);
@@ -297,6 +307,7 @@ GameObject* TutorialGame::AddFloorToWorld(const Vector3& position) {
 	floor->GetPhysicsObject()->InitCubeInertia();
 
 	world->AddGameObject(floor);
+
 
 	return floor;
 }

@@ -336,15 +336,6 @@ void PhysicsSystem::NarrowPhase() {
 				info.framesLeft = numCollisionFrames;
 				ImpulseResolveCollision(*info.a, *info.b, info.point);
 				allCollisions.insert(info); // insert into our main set
-
-				if ((info.a->GetCollisionLayer() == CollisionLayer::Player && info.b->GetCollisionLayer() == CollisionLayer::Floor)||
-					(info.b->GetCollisionLayer() == CollisionLayer::Player && info.a->GetCollisionLayer() == CollisionLayer::Floor)){
-					resetGame = true;
-				}
-				if ((info.a->GetCollisionLayer() == CollisionLayer::Player && info.b->GetCollisionLayer() == CollisionLayer::Finish) ||
-					(info.b->GetCollisionLayer() == CollisionLayer::Player && info.a->GetCollisionLayer() == CollisionLayer::Finish)) {
-					endGame = true;
-				}
 			}
 		}
 	}

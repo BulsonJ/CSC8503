@@ -55,7 +55,6 @@ void LevelOne::InitWorld() {
 }
 
 void LevelOne::ResetGame() {
-	physics->SetResetGame(false);
 	player->GetTransform()
 		.SetPosition(Vector3(0, 25, 0));
 	player->GetPhysicsObject()->SetLinearVelocity(Vector3(0, 0, 0));
@@ -63,9 +62,7 @@ void LevelOne::ResetGame() {
 
 
 void LevelOne::FinishGame() {
-	physics->SetResetGame(false);
-	physics->SetEndGame(false);
-	//gameEnded = true;
+	gameEnded = true;
 }
 
 GameObject* LevelOne::AddSeesawToWorld(const Vector3& position, Vector3 dimensions, float inverseMass) {

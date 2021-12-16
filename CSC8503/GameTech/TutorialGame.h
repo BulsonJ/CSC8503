@@ -6,6 +6,8 @@ namespace NCL {
 	namespace CSC8503 {
 		class NavigationGrid;
 		class EnemyGameObject;
+		class FinishObject;
+		class ResetObject;
 
 		class TutorialGame		{
 		public:
@@ -91,6 +93,9 @@ namespace NCL {
 			bool gameEnded = false;
 
 			void DrawDebugInfo(GameObject* object);
+
+			ResetObject* resetObject;
+			FinishObject* finishObject;
 
 		};
 	}
