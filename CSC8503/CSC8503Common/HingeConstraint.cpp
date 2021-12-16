@@ -2,20 +2,23 @@
 #include "GameObject.h"
 
 using namespace NCL;
+using namespace NCL::Maths;
+
+using namespace NCL;
 using namespace CSC8503;
 
 void HingeConstraint::UpdateConstraint(float dt) {
 
 	Vector3 relativePos =
-		hinge->GetTransform().GetOrientation().ToEuler() -
-		object->GetTransform().GetOrientation().ToEuler();
+		object->GetTransform().GetPosition() -
+		hinge->GetTransform().GetPosition();
 
-	float currentDistance = relativePos.Length();
-
-	float offset = 0.0 - currentDistance;
-
-	if (abs(offset) > 0.0f) {
-		Vector3 offsetDir = relativePos.Normalised();
+	Vector3 objectToHingeDir = relativePos.Normalised();
+	Vector3 objectUpDir = (object->GetTransform().GetOrientation() * Vector3(0, 0, -1)).Normalised();
+	float offset = Vector3::Dot(objectUpDir, objectToHingeDir);
+	
+	if (abs(offset) < 0.95f) {
+		Vector3 offsetDir = objectToHingeDir;
 
 		PhysicsObject* physA = hinge->GetPhysicsObject();
 		PhysicsObject* physB = object->GetPhysicsObject();
@@ -29,7 +32,7 @@ void HingeConstraint::UpdateConstraint(float dt) {
 		if (constraintMass > 0.0f) {
 			//how much of their relative force is affecting the constraint
 			float velocityDot = Vector3::Dot(relativeVelocity, offsetDir);
-			float biasFactor = 0.01f;
+			float biasFactor = 0.1f;
 			float bias = -(biasFactor / dt) * offset;
 
 			float lambda = -(velocityDot + bias) / constraintMass;

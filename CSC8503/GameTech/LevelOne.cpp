@@ -16,12 +16,13 @@ void LevelOne::InitWorld() {
 
 	AddPlayerToWorld(Vector3(0, 25, 0));
 
-	AddHammerToWorld(Vector3(-2.5, 21.5, -5), Vector3(5, 1, 1), 5.0f);
+	GameObject* hammer = AddHammerToWorld(Vector3(-7.5, 19.5, 0), Vector3(5, 1, 1), 1.0f);
+
 	AddCubeToWorld(Vector3(0, 10, 0), Vector3(5, 10, 5), 0.0f);
 	// See saw
-	GameObject* seesaw = AddSeesawToWorld(Vector3(12.5, 17.5, 0), Vector3(7.5, 2.5, 2.5), 5.0f);
+	//GameObject* seesaw = AddSeesawToWorld(Vector3(12.5, 17.5, 0), Vector3(7.5, 2.5, 2.5), 5.0f);
 	AddCubeToWorld(Vector3(25, 10, 0), Vector3(5, 10, 5), 0.0f);
-	GameObject* seesaw2 = AddSeesawToWorld(Vector3(25 + 12.5, 17.5, 0), Vector3(7.5, 2.5, 2.5), 5.0f);
+	//GameObject* seesaw2 = AddSeesawToWorld(Vector3(25 + 12.5, 17.5, 0), Vector3(7.5, 2.5, 2.5), 5.0f);
 	AddCubeToWorld(Vector3(50, 10, 0), Vector3(5, 10, 5), 0.0f);
 
 	GameObject* ramp = AddOBBCubeToWorld(Vector3(50, 10, -10), Vector3(5, 10, 5), 0.0f);
@@ -115,9 +116,9 @@ GameObject* LevelOne::AddHammerToWorld(const Vector3& position, Vector3 dimensio
 
 	world->AddGameObject(cube);
 
-	GameObject* hinge = AddCubeToWorld(position, Vector3(1, 1, 1), 0.0f);
+	GameObject* hinge = AddCubeToWorld(position + Vector3(0,10,0), Vector3(1, 1, 1), 0.0f);
 	hinge->SetCollisionLayer(CollisionLayer::Wall);
-	PositionConstraint* posConstraint = new PositionConstraint(cube, hinge, 0);
+	PositionConstraint* posConstraint = new PositionConstraint(cube, hinge, 5);
 	world->AddConstraint(posConstraint);
 	HingeConstraint* constraint = new HingeConstraint(cube, hinge);
 	world->AddConstraint(constraint);
