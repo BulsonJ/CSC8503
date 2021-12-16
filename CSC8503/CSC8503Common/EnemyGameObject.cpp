@@ -67,7 +67,7 @@ EnemyGameObject::EnemyGameObject(NavigationGrid* grid, GameObject* target) {
 		[&]()-> bool
 		{
 			if (this->GetTarget()) {
-				return (this->target->GetTransform().GetPosition() - this->GetTransform().GetPosition()).Length() < 5.0f;
+				return (this->target->GetTransform().GetPosition() - this->GetTransform().GetPosition()).Length() < 1.0f;
 			}
 		}
 	));

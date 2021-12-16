@@ -49,11 +49,11 @@ void CoinObject::Update(float dt) {
 }
 
 void CoinObject::MoveLeft(float dt) {
-	GetPhysicsObject()->AddForce({ 0, 0, -10 });
+	GetPhysicsObject()->AddForce({ 0, 0, -6 });
 	counter += dt;
 }
 
 void CoinObject::MoveRight(float dt) {
-	GetPhysicsObject()->AddForce({ 0, 0, 10 });
+	GetPhysicsObject()->AddForce({ 0, 0, 6 });
 	counter -= dt;
 }

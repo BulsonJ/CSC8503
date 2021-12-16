@@ -63,7 +63,8 @@ void LevelTwo::LoseScreen() {
 }
 
 void LevelTwo::ResetGame() {
-	transitionTimer = true;
+	selectionObject = nullptr;
+	lockedObject = nullptr;
 
 	InitWorld();
 	InitCamera();

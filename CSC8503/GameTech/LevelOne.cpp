@@ -41,7 +41,6 @@ void LevelOne::InitWorld() {
 	AddCubeToWorld(Vector3(0, 5, -42.5), Vector3(5, 5, 5), 0.0f);
 
 	// Ice
-
 	GameObject* ice = AddCubeToWorld(Vector3(25, 9, -42.5), Vector3(20, 1, 10), 0.0f);
 	ice->GetPhysicsObject()->SetElasticity(0.8f);
 	ice->GetPhysicsObject()->SetFriction(0.0f);
@@ -52,8 +51,8 @@ void LevelOne::InitWorld() {
 	GameObject* finish = AddFinishToWorld(Vector3(55, 11, -42.5), Vector3(1, 1, 10), 0.0f);
 	finish->SetCollisionLayer(CollisionLayer::Finish);
 
-	AddCoinObjectToWorld(Vector3(25, 22.5, 13.5));
-	AddCoinObjectToWorld(Vector3(35+12.5, 22.5, 13.5));
+	AddCoinObjectToWorld(Vector3(25, 32, 5.5));
+	AddCoinObjectToWorld(Vector3(35+12.5, 32, 5.5));
 
 	InitResetFloor();
 }
@@ -88,6 +87,8 @@ void LevelOne::LoseScreen() {
 
 void LevelOne::ResetGame() {
 	transitionTimer = true;
+	selectionObject = nullptr;
+	lockedObject = nullptr;
 
 	InitWorld();
 	//InitCamera();

@@ -22,7 +22,8 @@ TutorialGame::TutorialGame()	{
 
 	physics->SetGlobalDamping(0.9f);
 	forceMagnitude	= 10.0f;
-	useGravity		= false;
+	useGravity		= true;
+	physics->UseGravity(useGravity);
 	inSelectionMode = false;
 	score = 0;
 	elapsedTime = 0;
@@ -117,20 +118,6 @@ void TutorialGame::UpdateGame(float dt) {
 		//Debug::DrawAxisLines(lockedObject->GetTransform().GetMatrix(), 2.0f);
 	}
 
-	GameObjectIterator first;
-	GameObjectIterator last;
-	world->GetObjectIterators(first, last);
-	for (auto it = first; it != last; ++it) {
-		CoinObject* c = dynamic_cast<CoinObject*>(*it);
-		if (c) {
-			if (c->ToDelete()) {
-				RemoveGameObject(*it);
-				score += 10;
-				world->GetObjectIterators(first, last);
-			}
-		}
-	}
-
 	if (!startTransition) {
 		elapsedTime += dt;
 		Debug::Print("Time:" + std::to_string(elapsedTime), Vector2(5, 70));
@@ -147,7 +134,6 @@ void TutorialGame::UpdateGame(float dt) {
 	if (resetObject) {
 		if (resetObject->GetResetGame() == true) {
 			ResetGame();
-			resetObject->SetResetGame(false);
 			//startTransition = true;
 			//resetTransition = true;
 		}
@@ -156,9 +142,29 @@ void TutorialGame::UpdateGame(float dt) {
 	if (finishObject) {
 		if (finishObject->GetFinish() == true) {
 			//FinishGame();
-			//finishObject->SetFinish(false);
 			startTransition = true;
 			finishTransition = true;
+		}
+	}
+
+	GameObjectIterator first;
+	GameObjectIterator last;
+	world->GetObjectIterators(first, last);
+	for (auto it = first; it != last; ++it) {
+		CoinObject* c = dynamic_cast<CoinObject*>(*it);
+		if (c) {
+			if (c->ToDelete()) {
+				RemoveGameObject(*it);
+				score += 10;
+				world->GetObjectIterators(first, last);
+			}
+		}
+		EnemyGameObject* e = dynamic_cast<EnemyGameObject*>(*it);
+		if (e) {
+			if (e->GetHitPlayer()) {
+				ResetGame();
+				break;
+			}
 		}
 	}
 
@@ -766,6 +772,7 @@ void TutorialGame::DrawDebugInfo(GameObject* object) {
 	if (c) {
 		renderer->DrawString("State: test", Vector2(5, 15));
 	}
+
 }
 
 /*

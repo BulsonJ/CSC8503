@@ -1,11 +1,1 @@
-﻿  TutorialGame.cpp
-C:\Files\University\Technologies\8503-Release-2021\CSC8503\GameTech\TutorialGame.cpp(580,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Files\University\Technologies\8503-Release-2021\CSC8503\GameTech\TutorialGame.cpp(580,39): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Files\University\Technologies\8503-Release-2021\CSC8503\GameTech\TutorialGame.cpp(580,31): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Files\University\Technologies\8503-Release-2021\CSC8503\GameTech\TutorialGame.cpp(581,42): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Files\University\Technologies\8503-Release-2021\CSC8503\GameTech\TutorialGame.cpp(610,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Files\University\Technologies\8503-Release-2021\CSC8503\GameTech\TutorialGame.cpp(610,39): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Files\University\Technologies\8503-Release-2021\CSC8503\GameTech\TutorialGame.cpp(610,31): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Files\University\Technologies\8503-Release-2021\CSC8503\GameTech\TutorialGame.cpp(611,42): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Files\University\Technologies\8503-Release-2021\CSC8503\GameTech\TutorialGame.cpp(665,41): warning C4305: 'argument': truncation from 'double' to 'float'
-  GameTech.vcxproj -> C:\Files\University\Technologies\8503-Release-2021\x64\Debug\GameTech.exe
+﻿  GameTech.vcxproj -> C:\Files\University\Technologies\8503-Release-2021\x64\Debug\GameTech.exe
