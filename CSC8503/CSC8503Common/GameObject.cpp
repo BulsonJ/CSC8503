@@ -9,6 +9,7 @@ GameObject::GameObject(string objectName)	{
 	isActive		= true;
 	toDelete = false;
 	boundingVolume	= nullptr;
+	useGravity = true;
 	physicsObject	= nullptr;
 	renderObject	= nullptr;
 	collisionLayer  = CollisionLayer::Default;

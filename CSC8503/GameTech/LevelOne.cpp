@@ -24,9 +24,11 @@ void LevelOne::InitWorld() {
 
 	AddCubeToWorld(Vector3(0, 10, 0), Vector3(5, 10, 5), 0.0f);
 	// See saw
-	//GameObject* seesaw = AddSeesawToWorld(Vector3(12.5, 17.5, 0), Vector3(7.5, 2.5, 2.5), 5.0f);
+	GameObject* bridge = AddCubeToWorld(Vector3(12.5, 17.5, 0), Vector3(7.5, 2.5, 2.5), 0.0f);
+
 	AddCubeToWorld(Vector3(25, 10, 0), Vector3(5, 10, 5), 0.0f);
-	//GameObject* seesaw2 = AddSeesawToWorld(Vector3(25 + 12.5, 17.5, 0), Vector3(7.5, 2.5, 2.5), 5.0f);
+
+	GameObject* bridge2 = AddCubeToWorld(Vector3(25 + 12.5, 17.5, 0), Vector3(7.5, 2.5, 2.5), 0.0f);
 	AddCubeToWorld(Vector3(50, 10, 0), Vector3(5, 10, 5), 0.0f);
 
 	GameObject* ramp = AddOBBCubeToWorld(Vector3(50, 10, -10), Vector3(5, 10, 5), 0.0f);
@@ -99,36 +101,6 @@ void LevelOne::ResetGame() {
 
 void LevelOne::FinishGame() {
 	gameEnded = true;
-}
-
-GameObject* LevelOne::AddSeesawToWorld(const Vector3& position, Vector3 dimensions, float inverseMass) {
-	GameObject* cube = new GameObject();
-
-	OBBVolume* volume = new OBBVolume(dimensions);
-
-	cube->SetBoundingVolume((CollisionVolume*)volume);
-	cube->SetCollisionLayer(CollisionLayer::Wall);
-
-	cube->GetTransform()
-		.SetPosition(position)
-		.SetScale(dimensions * 2);
-
-	cube->SetRenderObject(new RenderObject(&cube->GetTransform(), cubeMesh, basicTex, basicShader));
-	cube->SetPhysicsObject(new PhysicsObject(&cube->GetTransform(), cube->GetBoundingVolume()));
-
-	cube->GetPhysicsObject()->SetInverseMass(inverseMass);
-	cube->GetPhysicsObject()->InitCubeInertia();
-
-	world->AddGameObject(cube);
-
-	GameObject* hinge = AddCubeToWorld(position, Vector3(1, 2, 1), 0.0f);
-	hinge->SetCollisionLayer(CollisionLayer::Wall);
-	PositionConstraint* posConstraint = new PositionConstraint(cube, hinge, 0);
-	world->AddConstraint(posConstraint);
-	HingeConstraint* constraint = new HingeConstraint(cube, hinge);
-	world->AddConstraint(constraint);
-
-	return cube;
 }
 
 GameObject* LevelOne::AddHammerToWorld(const Vector3& position, Vector3 dimensions, float inverseMass) {

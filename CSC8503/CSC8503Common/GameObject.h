@@ -125,6 +125,9 @@ namespace NCL {
 				return colour;
 			}
 
+			bool GetUsesGravity() const { return useGravity; }
+			void SetUsesGravity(bool s) { useGravity = s; }
+
 			void ConstrainLinearVelocity();
 			void ConstrainAngularVelocity();
 
@@ -149,6 +152,7 @@ namespace NCL {
 			Vector4 colour;
 
 			int lockFlags;
+			bool useGravity;
 		};
 	}
 }
