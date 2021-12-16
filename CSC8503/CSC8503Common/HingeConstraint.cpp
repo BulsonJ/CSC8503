@@ -14,10 +14,10 @@ void HingeConstraint::UpdateConstraint(float dt) {
 		hinge->GetTransform().GetPosition();
 
 	Vector3 objectToHingeDir = relativePos.Normalised();
-	Vector3 objectUpDir = (object->GetTransform().GetOrientation() * Vector3(0, 0, -1)).Normalised();
+	Vector3 objectUpDir = (object->GetTransform().GetOrientation() * Vector3(0, 1, 0)).Normalised();
 	float offset = Vector3::Dot(objectUpDir, objectToHingeDir);
 	
-	if (abs(offset) < 0.95f) {
+	if (offset < 1.0f) {
 		Vector3 offsetDir = objectToHingeDir;
 
 		PhysicsObject* physA = hinge->GetPhysicsObject();
