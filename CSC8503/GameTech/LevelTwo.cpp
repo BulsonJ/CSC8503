@@ -23,6 +23,14 @@ void LevelTwo::InitWorld() {
 	InitDefaultFloor();
 }
 
+void LevelTwo::WinScreen() {
+
+}
+
+void LevelTwo::LoseScreen() {
+
+}
+
 void LevelTwo::ResetGame() {
 	player->GetTransform()
 		.SetPosition(Vector3(80, 0, 10));

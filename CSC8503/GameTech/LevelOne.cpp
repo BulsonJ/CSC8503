@@ -3,6 +3,8 @@
 #include "../CSC8503Common/HingeConstraint.h"
 #include "../CSC8503Common/RotationConstraint.h"
 #include "../CSC8503Common/OBBVolume.h"
+#include "../CSC8503Common/FinishObject.h"
+#include "../CSC8503Common/ResetObject.h"
 using namespace NCL;
 using namespace CSC8503;
 
@@ -46,18 +48,50 @@ void LevelOne::InitWorld() {
 
 	// Finish
 	AddCubeToWorld(Vector3(50, 5, -42.5), Vector3(5, 5, 10), 0.0f);
-	GameObject* finish = AddCubeToWorld(Vector3(55, 11, -42.5), Vector3(1, 1, 10), 0.0f);
+	GameObject* finish = AddFinishToWorld(Vector3(55, 11, -42.5), Vector3(1, 1, 10), 0.0f);
 	finish->SetCollisionLayer(CollisionLayer::Finish);
 
-	//AddBonusToWorld(Vector3(10, 5, 0));
+	AddCoinObjectToWorld(Vector3(25, 22.5, 12.5));
+	AddCoinObjectToWorld(Vector3(35+12.5, 22.5, 12.5));
 
 	InitDefaultFloor();
 }
 
+void LevelOne::WinScreen() {
+	Debug::Print("You Won!", Vector2(40, 40));
+	Debug::Print("Time:" + std::to_string(elapsedTime), Vector2(40, 45));
+	Debug::Print("Score:" + std::to_string(score), Vector2(40, 50));
+
+	if (transitionTimer > transitionTimerMax) {
+		FinishGame();
+		finishObject->SetFinish(false);
+		startTransition = false;
+		finishTransition = false;
+		transitionTimer = 0;
+	}
+}
+
+void LevelOne::LoseScreen() {
+	Debug::Print("You Lost!", Vector2(40, 40));
+	Debug::Print("Time:" + std::to_string(elapsedTime), Vector2(40, 45));
+	Debug::Print("Score:" + std::to_string(score), Vector2(40, 50));
+
+	if (transitionTimer > transitionTimerMax) {
+		ResetGame();
+		resetObject->SetResetGame(false);
+		startTransition = false;
+		resetTransition = false;
+		transitionTimer = 0;
+	}
+}
+
 void LevelOne::ResetGame() {
-	player->GetTransform()
-		.SetPosition(Vector3(0, 25, 0));
-	player->GetPhysicsObject()->SetLinearVelocity(Vector3(0, 0, 0));
+	transitionTimer = true;
+
+	InitWorld();
+	InitCamera();
+	elapsedTime = 0;
+	score = 0;
 }
 
 

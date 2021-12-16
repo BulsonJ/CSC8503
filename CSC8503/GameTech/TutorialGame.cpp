@@ -5,7 +5,7 @@
 #include "../../Plugins/OpenGLRendering/OGLTexture.h"
 #include "../../Common/TextureLoader.h"
 #include "../CSC8503Common/PositionConstraint.h"
-#include "../CSC8503Common/StateGameObject.h"
+#include "../CSC8503Common/CoinObject.h"
 #include "../CSC8503Common/EnemyGameObject.h"
 #include "../CSC8503Common/NavigationGrid.h"
 
@@ -24,6 +24,14 @@ TutorialGame::TutorialGame()	{
 	forceMagnitude	= 10.0f;
 	useGravity		= false;
 	inSelectionMode = false;
+	score = 0;
+	elapsedTime = 0;
+	transitionTimer = 0;
+	transitionTimerMax = 5;
+	startTransition = false;
+
+	resetTransition = false;
+	finishTransition = false;
 
 	Debug::SetRenderer(renderer);
 
@@ -75,15 +83,19 @@ TutorialGame::~TutorialGame()	{
 void TutorialGame::UpdateGame(float dt) {
 	if (resetObject) {
 		if (resetObject->GetResetGame() == true) {
-			ResetGame();
-			resetObject->SetResetGame(false);
+			//ResetGame();
+			//resetObject->SetResetGame(false);
+			startTransition = true;
+			resetTransition = true;
 		}
 	}
 
 	if (finishObject) {
 		if(finishObject->GetFinish() == true) {
-			FinishGame();
-			finishObject->SetFinish(false);
+			//FinishGame();
+			//finishObject->SetFinish(false);
+			startTransition = true;
+			finishTransition = true;
 		}
 	}
 
@@ -121,6 +133,32 @@ void TutorialGame::UpdateGame(float dt) {
 
 		//Debug::DrawAxisLines(lockedObject->GetTransform().GetMatrix(), 2.0f);
 	}
+
+	GameObjectIterator first;
+	GameObjectIterator last;
+	world->GetObjectIterators(first, last);
+	for (auto it = first; it != last; ++it) {
+		CoinObject* c = dynamic_cast<CoinObject*>(*it);
+		if (c) {
+			if (c->ToDelete()) {
+				RemoveGameObject(*it);
+				score += 10;
+				world->GetObjectIterators(first, last);
+			}
+		}
+	}
+
+	elapsedTime += dt;
+	Debug::Print("Time:" + std::to_string(elapsedTime), Vector2(5, 70));
+	Debug::Print("Score:" + std::to_string(score), Vector2(5, 75));
+
+	if (startTransition) {
+		transitionTimer += dt;
+
+		if (resetTransition) LoseScreen();
+		if (finishTransition) WinScreen();
+	}
+
 
 	world->UpdateWorld(dt);
 	renderer->Update(dt);
@@ -250,7 +288,7 @@ void TutorialGame::InitWorld() {
 	InitMixedGridWorld(5, 5, 3.5f, 3.5f);
 	InitGameExamples();
 	InitDefaultFloor();
-	AddStateObjectToWorld(Vector3(0, 20, 0));
+	AddCoinObjectToWorld(Vector3(0, 20, 0));
 }
 
 void TutorialGame::BridgeConstraintTest() {
@@ -390,6 +428,30 @@ GameObject* TutorialGame::AddOBBCubeToWorld(const Vector3& position, Vector3 dim
 	GameObject* cube = new GameObject();
 
 	OBBVolume* volume = new OBBVolume(dimensions);
+
+	cube->SetBoundingVolume((CollisionVolume*)volume);
+
+	cube->GetTransform()
+		.SetPosition(position)
+		.SetScale(dimensions * 2);
+
+	cube->SetRenderObject(new RenderObject(&cube->GetTransform(), cubeMesh, basicTex, basicShader));
+	cube->SetPhysicsObject(new PhysicsObject(&cube->GetTransform(), cube->GetBoundingVolume()));
+
+	cube->GetPhysicsObject()->SetInverseMass(inverseMass);
+	cube->GetPhysicsObject()->InitCubeInertia();
+	cube->SetCollisionLayer(CollisionLayer::Wall);
+
+	world->AddGameObject(cube);
+
+	return cube;
+}
+
+GameObject* TutorialGame::AddFinishToWorld(const Vector3& position, Vector3 dimensions, float inverseMass) {
+	finishObject = new FinishObject();
+	GameObject* cube = finishObject;
+
+	AABBVolume* volume = new AABBVolume(dimensions);
 
 	cube->SetBoundingVolume((CollisionVolume*)volume);
 
@@ -554,14 +616,15 @@ GameObject* TutorialGame::AddBonusToWorld(const Vector3& position) {
 	return apple;
 }
 
-GameObject* TutorialGame::AddStateObjectToWorld(const Vector3& position) {
-	GameObject* apple = new StateGameObject();
+GameObject* TutorialGame::AddCoinObjectToWorld(const Vector3& position) {
+	GameObject* apple = new CoinObject();
 
 	SphereVolume* volume = new SphereVolume(0.25f);
 	apple->SetBoundingVolume((CollisionVolume*)volume);
 	apple->GetTransform()
 		.SetScale(Vector3(0.25, 0.25, 0.25))
-		.SetPosition(position);
+		.SetPosition(position)
+		.SetOrientation(Quaternion::AxisAngleToQuaterion(Vector3(0,1,0),90));
 
 	apple->SetRenderObject(new RenderObject(&apple->GetTransform(), bonusMesh, nullptr, basicShader));
 	apple->SetPhysicsObject(new PhysicsObject(&apple->GetTransform(), apple->GetBoundingVolume()));
@@ -663,6 +726,11 @@ void TutorialGame::DrawDebugInfo(GameObject* object) {
 	if (e) {
 		Debug::DrawPath(e->GetPath());
 	}
+	// Draw enemy debug information
+	CoinObject* c = dynamic_cast<CoinObject*>(object);
+	if (c) {
+		renderer->DrawString("State: test", Vector2(5, 15));
+	}
 }
 
 /*
@@ -694,4 +762,9 @@ void TutorialGame::MoveSelectedObject() {
 			}
 		}
 	}
+}
+
+void TutorialGame::RemoveGameObject(GameObject* object) {
+	physics->RemoveObjectFromCollisions(object);
+	world->RemoveGameObject(object, true);
 }

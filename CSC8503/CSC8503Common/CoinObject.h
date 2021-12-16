@@ -3,10 +3,10 @@
 namespace NCL {
 	namespace CSC8503 {
 		class StateMachine;
-		class StateGameObject : public GameObject {
+		class CoinObject : public GameObject {
 		public:
-			StateGameObject();
-			~StateGameObject();
+			CoinObject();
+			~CoinObject();
 			
 		virtual void Update(float dt);
 		

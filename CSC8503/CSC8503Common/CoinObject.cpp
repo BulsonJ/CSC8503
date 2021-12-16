@@ -1,4 +1,4 @@
-#include "StateGameObject.h"
+#include "CoinObject.h"
 #include "../CSC8503Common/StateTransition.h"
 #include "../CSC8503Common/StateMachine.h"
 #include "../CSC8503Common/State.h"
@@ -6,7 +6,7 @@
 using namespace NCL;
 using namespace CSC8503;
 
-StateGameObject::StateGameObject() {
+CoinObject::CoinObject() {
 	counter = 0.0f;
 	stateMachine = new StateMachine();
 
@@ -40,20 +40,20 @@ StateGameObject::StateGameObject() {
 	));
 }
 
-StateGameObject ::~StateGameObject() {
+CoinObject ::~CoinObject() {
 	delete stateMachine;
 }
 
-void StateGameObject::Update(float dt) {
+void CoinObject::Update(float dt) {
 	stateMachine->Update(dt);
 }
 
-void StateGameObject::MoveLeft(float dt) {
-	GetPhysicsObject()->AddForce({ -100, 0, 0 });
+void CoinObject::MoveLeft(float dt) {
+	GetPhysicsObject()->AddForce({ 0, 0, -10 });
 	counter += dt;
 }
 
-void StateGameObject::MoveRight(float dt) {
-	GetPhysicsObject()->AddForce({ 100, 0, 0 });
+void CoinObject::MoveRight(float dt) {
+	GetPhysicsObject()->AddForce({ 0, 0, 10 });
 	counter -= dt;
 }

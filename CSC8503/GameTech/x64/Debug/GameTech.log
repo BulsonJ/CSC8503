@@ -1,6 +1,2 @@
-﻿  TutorialGame.cpp
-C:\Files\University\Technologies\8503-Release-2021\CSC8503\GameTech\TutorialGame.cpp(487,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Files\University\Technologies\8503-Release-2021\CSC8503\GameTech\TutorialGame.cpp(487,39): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Files\University\Technologies\8503-Release-2021\CSC8503\GameTech\TutorialGame.cpp(487,31): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Files\University\Technologies\8503-Release-2021\CSC8503\GameTech\TutorialGame.cpp(488,42): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+﻿  LevelOne.cpp
   GameTech.vcxproj -> C:\Files\University\Technologies\8503-Release-2021\x64\Debug\GameTech.exe

@@ -471,3 +471,14 @@ void PhysicsSystem::UpdateConstraints(float dt) {
 		(*i)->UpdateConstraint(dt);
 	}
 }
+
+void PhysicsSystem::RemoveObjectFromCollisions(GameObject* obj) {
+	for (auto it = allCollisions.begin(); it != allCollisions.end();) {
+		if ((*it).a == obj || (*it).b == obj) {
+			it = allCollisions.erase(it);
+		}
+		else {
+			it++;
+		}
+	}
+}

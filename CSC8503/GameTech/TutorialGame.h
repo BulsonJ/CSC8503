@@ -26,6 +26,10 @@ namespace NCL {
 			void UpdateKeys();
 
 			virtual void InitWorld() = 0;
+
+			virtual void WinScreen() = 0;
+			virtual void LoseScreen() = 0;
+
 			virtual void ResetGame() = 0;
 			virtual void FinishGame() = 0;
 
@@ -46,6 +50,7 @@ namespace NCL {
 			GameObject* AddSphereToWorld(const Vector3& position, float radius, float inverseMass = 10.0f);
 			GameObject* AddCubeToWorld(const Vector3& position, Vector3 dimensions, float inverseMass = 10.0f);
 			GameObject* AddOBBCubeToWorld(const Vector3& position, Vector3 dimensions, float inverseMass = 10.0f);
+			GameObject* AddFinishToWorld(const Vector3& position, Vector3 dimensions, float inverseMass = 0.0f);
 			
 			GameObject* AddCapsuleToWorld(const Vector3& position, float halfHeight, float radius, float inverseMass = 10.0f);
 
@@ -53,7 +58,9 @@ namespace NCL {
 			GameObject* AddEnemyToWorld(const Vector3& position);
 			GameObject* AddBonusToWorld(const Vector3& position);
 
-			GameObject* AddStateObjectToWorld(const Vector3& position);
+			GameObject* AddCoinObjectToWorld(const Vector3& position);
+
+			void RemoveGameObject(GameObject* object);
 
 			GameTechRenderer*	renderer;
 			PhysicsSystem*		physics;
@@ -96,6 +103,16 @@ namespace NCL {
 
 			ResetObject* resetObject;
 			FinishObject* finishObject;
+
+			int score;
+			float elapsedTime;
+
+			bool resetTransition;
+			bool finishTransition;
+
+			bool startTransition;
+			float transitionTimer;
+			float transitionTimerMax;
 
 		};
 	}

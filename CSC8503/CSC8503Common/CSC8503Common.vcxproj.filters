@@ -108,9 +108,6 @@
     <ClInclude Include="CapsuleVolume.h">
       <Filter>CollisionDetection</Filter>
     </ClInclude>
-    <ClInclude Include="StateGameObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="EnemyGameObject.h">
       <Filter>Objects</Filter>
     </ClInclude>
@@ -124,6 +121,9 @@
       <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="ResetObject.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="CoinObject.h">
       <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>
@@ -173,9 +173,6 @@
     <ClCompile Include="QuadTree.cpp">
       <Filter>CollisionDetection</Filter>
     </ClCompile>
-    <ClCompile Include="StateGameObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="EnemyGameObject.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
@@ -189,6 +186,9 @@
       <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="ResetObject.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="CoinObject.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
   </ItemGroup>
