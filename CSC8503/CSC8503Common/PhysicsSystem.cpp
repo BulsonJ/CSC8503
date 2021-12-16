@@ -270,8 +270,15 @@ void PhysicsSystem::ImpulseResolveCollision(GameObject& a, GameObject& b, Collis
 	physB->ApplyLinearImpulse(fullImpulse );
 	
 	physA->ApplyAngularImpulse(Vector3::Cross(relativeA, -fullImpulse));
-	
 	physB->ApplyAngularImpulse(Vector3::Cross(relativeB, fullImpulse));
+
+	physA->SetLinearVelocity(physA->GetLinearVelocity() * (1 - physB->GetFriction()));
+	physB->SetLinearVelocity(physB->GetLinearVelocity() * (1 - physA->GetFriction()));
+	physA->SetAngularVelocity(physA->GetAngularVelocity() * (1 - physB->GetFriction()));
+	physB->SetAngularVelocity(physB->GetAngularVelocity() * (1 - physA->GetFriction()));
+
+	a.ConstrainLinearVelocity(); a.ConstrainAngularVelocity();
+	b.ConstrainLinearVelocity(); b.ConstrainAngularVelocity();
 }
 
 /*
@@ -382,6 +389,7 @@ void PhysicsSystem::IntegrateAccel(float dt) {
 		}
 		linearVel += accel * dt; // integrate accel!
 		object->SetLinearVelocity(linearVel); // previous code
+		(*i)->ConstrainLinearVelocity();
 		
 		// Angular stuff
 		Vector3 torque = object->GetTorque();
@@ -393,6 +401,7 @@ void PhysicsSystem::IntegrateAccel(float dt) {
 
 		angVel += angAccel * dt; // integrate angular accel!
 		object->SetAngularVelocity(angVel);
+		(*i)->ConstrainAngularVelocity();
 	}
 }
 /*
@@ -421,6 +430,7 @@ void PhysicsSystem::IntegrateVelocity(float dt) {
 		// Linear Damping
 		linearVel = linearVel * frameLinearDamping;
 		object->SetLinearVelocity(linearVel);
+		(*i)->ConstrainLinearVelocity();
 
 		// Orientation Stuff
 		Quaternion orientation = transform.GetOrientation();
@@ -436,6 +446,7 @@ void PhysicsSystem::IntegrateVelocity(float dt) {
 		float frameAngularDamping = 1.0f - (globalDamping * dt);
 		angVel = angVel * frameAngularDamping;
 		object->SetAngularVelocity(angVel);
+		(*i)->ConstrainAngularVelocity();
 	}
 }
 

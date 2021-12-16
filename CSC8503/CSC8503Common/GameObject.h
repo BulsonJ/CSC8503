@@ -22,6 +22,15 @@ namespace NCL {
 			Finish = 512
 		};
 
+		enum AxisLock {
+			LINEAR_X = (1 << 0),
+			LINEAR_Y = (1 << 1),
+			LINEAR_Z = (1 << 2),
+			ANGULAR_X = (1 << 3),
+			ANGULAR_Y = (1 << 4),
+			ANGULAR_Z = (1 << 5)
+		};
+
 		class GameObject	{
 		public:
 			GameObject(string name = "");
@@ -97,6 +106,17 @@ namespace NCL {
 				collisionLayer = layer;
 			}
 
+			void SetLockFlags(int lf) {
+				lockFlags = lf;
+			}
+
+			int	GetLockFlags() const {
+				return lockFlags;
+			}
+
+			void ConstrainLinearVelocity();
+			void ConstrainAngularVelocity();
+
 			virtual void Update(float dt);
 
 		protected:
@@ -114,6 +134,8 @@ namespace NCL {
 			CollisionLayer collisionLayer;
 
 			Vector3 broadphaseAABB;
+
+			int lockFlags;
 		};
 	}
 }

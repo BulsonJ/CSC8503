@@ -120,6 +120,9 @@
     <ClInclude Include="HingeConstraint.h">
       <Filter>Physics\Constraints</Filter>
     </ClInclude>
+    <ClInclude Include="RotationConstraint.h">
+      <Filter>Physics\Constraints</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameWorld.cpp">
@@ -177,6 +180,9 @@
       <Filter>Physics\Constraints</Filter>
     </ClCompile>
     <ClCompile Include="HingeConstraint.cpp">
+      <Filter>Physics\Constraints</Filter>
+    </ClCompile>
+    <ClCompile Include="RotationConstraint.cpp">
       <Filter>Physics\Constraints</Filter>
     </ClCompile>
   </ItemGroup>

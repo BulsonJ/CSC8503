@@ -1,6 +1,7 @@
 #include "LevelOne.h"
 #include "../CSC8503Common/PositionConstraint.h"
 #include "../CSC8503Common/HingeConstraint.h"
+#include "../CSC8503Common/RotationConstraint.h"
 #include "../CSC8503Common/OBBVolume.h"
 using namespace NCL;
 using namespace CSC8503;
@@ -16,7 +17,8 @@ void LevelOne::InitWorld() {
 
 	AddPlayerToWorld(Vector3(0, 25, 0));
 
-	GameObject* hammer = AddHammerToWorld(Vector3(-7.5, 19.5, 0), Vector3(5, 1, 1), 1.0f);
+	GameObject* hammer = AddHammerToWorld(Vector3(-4.5, 25.5, 0), Vector3(1, 5, 1), 1.0f);
+	hammer->SetLockFlags(AxisLock::ANGULAR_X | AxisLock::ANGULAR_Y | AxisLock::LINEAR_X |AxisLock::LINEAR_Y | AxisLock::LINEAR_Z);
 
 	AddCubeToWorld(Vector3(0, 10, 0), Vector3(5, 10, 5), 0.0f);
 	// See saw
@@ -40,7 +42,7 @@ void LevelOne::InitWorld() {
 
 	GameObject* ice = AddCubeToWorld(Vector3(25, 9, -42.5), Vector3(20, 1, 10), 0.0f);
 	ice->GetPhysicsObject()->SetElasticity(0.8f);
-	ice->GetPhysicsObject()->SetFriction(200.0f);
+	ice->GetPhysicsObject()->SetFriction(0.0f);
 
 	// Finish
 	AddCubeToWorld(Vector3(50, 5, -42.5), Vector3(5, 5, 10), 0.0f);
@@ -116,12 +118,14 @@ GameObject* LevelOne::AddHammerToWorld(const Vector3& position, Vector3 dimensio
 
 	world->AddGameObject(cube);
 
-	GameObject* hinge = AddCubeToWorld(position + Vector3(0,10,0), Vector3(1, 1, 1), 0.0f);
+	GameObject* hinge = AddCubeToWorld(position + Vector3(0,15,0), Vector3(1, 1, 1), 0.0f);
 	hinge->SetCollisionLayer(CollisionLayer::Wall);
-	PositionConstraint* posConstraint = new PositionConstraint(cube, hinge, 5);
-	world->AddConstraint(posConstraint);
-	HingeConstraint* constraint = new HingeConstraint(cube, hinge);
-	world->AddConstraint(constraint);
+	//PositionConstraint* posConstraint = new PositionConstraint(cube, hinge, 10);
+	//world->AddConstraint(posConstraint);
+	//HingeConstraint* constraint = new HingeConstraint(cube, hinge);
+	//world->AddConstraint(constraint);
+	//RotationConstraint* rotConstraint = new RotationConstraint(cube, Vector3(0,0,1));
+	//world->AddConstraint(rotConstraint);
 
 	return cube;
 }
