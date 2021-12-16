@@ -81,23 +81,6 @@ TutorialGame::~TutorialGame()	{
 }
 
 void TutorialGame::UpdateGame(float dt) {
-	if (resetObject) {
-		if (resetObject->GetResetGame() == true) {
-			//ResetGame();
-			//resetObject->SetResetGame(false);
-			startTransition = true;
-			resetTransition = true;
-		}
-	}
-
-	if (finishObject) {
-		if(finishObject->GetFinish() == true) {
-			//FinishGame();
-			//finishObject->SetFinish(false);
-			startTransition = true;
-			finishTransition = true;
-		}
-	}
 
 	if (!inSelectionMode) {
 		world->GetMainCamera()->UpdateCamera(dt);
@@ -148,15 +131,35 @@ void TutorialGame::UpdateGame(float dt) {
 		}
 	}
 
-	elapsedTime += dt;
-	Debug::Print("Time:" + std::to_string(elapsedTime), Vector2(5, 70));
-	Debug::Print("Score:" + std::to_string(score), Vector2(5, 75));
+	if (!startTransition) {
+		elapsedTime += dt;
+		Debug::Print("Time:" + std::to_string(elapsedTime), Vector2(5, 70));
+		Debug::Print("Score:" + std::to_string(score), Vector2(5, 75));
+	}
 
 	if (startTransition) {
 		transitionTimer += dt;
 
 		if (resetTransition) LoseScreen();
 		if (finishTransition) WinScreen();
+	}
+
+	if (resetObject) {
+		if (resetObject->GetResetGame() == true) {
+			ResetGame();
+			resetObject->SetResetGame(false);
+			//startTransition = true;
+			//resetTransition = true;
+		}
+	}
+
+	if (finishObject) {
+		if (finishObject->GetFinish() == true) {
+			//FinishGame();
+			//finishObject->SetFinish(false);
+			startTransition = true;
+			finishTransition = true;
+		}
 	}
 
 
@@ -327,11 +330,34 @@ A single function to add a large immoveable cube to the bottom of our world
 
 */
 GameObject* TutorialGame::AddFloorToWorld(const Vector3& position) {
-	resetObject = new ResetObject();
-	GameObject* floor = resetObject;
+	GameObject* floor = new GameObject();
 
 	Vector3 floorSize	= Vector3(100, 2, 100);
 	AABBVolume* volume	= new AABBVolume(floorSize);
+	floor->SetBoundingVolume((CollisionVolume*)volume);
+	floor->GetTransform()
+		.SetScale(floorSize * 2)
+		.SetPosition(position);
+	floor->SetCollisionLayer(CollisionLayer::Floor);
+
+	floor->SetRenderObject(new RenderObject(&floor->GetTransform(), cubeMesh, basicTex, basicShader));
+	floor->SetPhysicsObject(new PhysicsObject(&floor->GetTransform(), floor->GetBoundingVolume()));
+
+	floor->GetPhysicsObject()->SetInverseMass(0);
+	floor->GetPhysicsObject()->InitCubeInertia();
+
+	world->AddGameObject(floor);
+
+
+	return floor;
+}
+
+GameObject* TutorialGame::AddResetFloorToWorld(const Vector3& position) {
+	resetObject = new ResetObject();
+	GameObject* floor = resetObject;
+
+	Vector3 floorSize = Vector3(100, 2, 100);
+	AABBVolume* volume = new AABBVolume(floorSize);
 	floor->SetBoundingVolume((CollisionVolume*)volume);
 	floor->GetTransform()
 		.SetScale(floorSize * 2)
@@ -516,6 +542,11 @@ void TutorialGame::InitDefaultFloor() {
 	AddFloorToWorld(Vector3(0, -2, 0));
 }
 
+
+void TutorialGame::InitResetFloor() {
+	AddResetFloorToWorld(Vector3(0, -2, 0));
+}
+
 void TutorialGame::InitGameExamples() {
 	AddPlayerToWorld(Vector3(80, 0, 10));
 	AddEnemyToWorld(Vector3(80, 0, 80));
@@ -524,7 +555,7 @@ void TutorialGame::InitGameExamples() {
 
 GameObject* TutorialGame::AddPlayerToWorld(const Vector3& position) {
 	float meshSize = 3.0f;
-	float inverseMass = 0.5f;
+	float inverseMass = 4.0f;
 
 	GameObject* character = new GameObject();
 	/*
@@ -575,14 +606,17 @@ GameObject* TutorialGame::AddEnemyToWorld(const Vector3& position) {
 
 	GameObject* character = new EnemyGameObject(grid, player);
 
-	AABBVolume* volume = new AABBVolume(Vector3(0.3f, 0.9f, 0.3f) * meshSize);
+	int radius = 2;
+	Vector3 sphereSize = Vector3(radius, radius, radius);
+	SphereVolume* volume = new SphereVolume(radius);
 	character->SetBoundingVolume((CollisionVolume*)volume);
 
 	character->GetTransform()
-		.SetScale(Vector3(meshSize, meshSize, meshSize))
+		.SetScale(sphereSize)
 		.SetPosition(position);
 
-	character->SetRenderObject(new RenderObject(&character->GetTransform(), enemyMesh, nullptr, basicShader));
+	character->SetRenderObject(new RenderObject(&character->GetTransform(), sphereMesh, basicTex, basicShader));
+	character->SetColour(Vector4(0.75, 0, 0, 1));
 	character->SetPhysicsObject(new PhysicsObject(&character->GetTransform(), character->GetBoundingVolume()));
 
 	character->GetPhysicsObject()->SetInverseMass(inverseMass);
@@ -628,6 +662,7 @@ GameObject* TutorialGame::AddCoinObjectToWorld(const Vector3& position) {
 
 	apple->SetRenderObject(new RenderObject(&apple->GetTransform(), bonusMesh, nullptr, basicShader));
 	apple->SetPhysicsObject(new PhysicsObject(&apple->GetTransform(), apple->GetBoundingVolume()));
+	apple->SetColour(Vector4(0.8, 0.6, 0, 1));
 	
 	apple->GetPhysicsObject()->SetInverseMass(1.0f);
 	apple->GetPhysicsObject()->InitSphereInertia();
@@ -662,7 +697,7 @@ bool TutorialGame::SelectObject() {
 
 		if (Window::GetMouse()->ButtonDown(NCL::MouseButtons::LEFT)) {
 			if (selectionObject) {	//set colour to deselected;
-				selectionObject->GetRenderObject()->SetColour(Vector4(1, 1, 1, 1));
+				selectionObject->GetRenderObject()->SetColour(selectionObject->GetColour());
 				selectionObject = nullptr;
 				lockedObject	= nullptr;
 			}
@@ -718,7 +753,7 @@ void TutorialGame::DrawDebugInfo(GameObject* object) {
 	// Draw position and rotation
 	Vector3 pos = object->GetTransform().GetPosition();
 	renderer->DrawString("Position: " + std::to_string(pos.x) + "," + std::to_string(pos.y) + "," + std::to_string(pos.z), Vector2(5, 5));
-	Vector3 rot = object->GetTransform().GetOrientation() * Vector3(0, 0, -1);
+	Vector3 rot = object->GetTransform().GetOrientation().ToEuler();
 	renderer->DrawString("Rotation: " + std::to_string(rot.x) + "," + std::to_string(rot.y) + "," + std::to_string(rot.z), Vector2(5, 10));
 
 	// Draw enemy debug information

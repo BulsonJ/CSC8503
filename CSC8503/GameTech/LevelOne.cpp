@@ -45,16 +45,17 @@ void LevelOne::InitWorld() {
 	GameObject* ice = AddCubeToWorld(Vector3(25, 9, -42.5), Vector3(20, 1, 10), 0.0f);
 	ice->GetPhysicsObject()->SetElasticity(0.8f);
 	ice->GetPhysicsObject()->SetFriction(0.0f);
+	ice->SetColour(Vector4(0, 0.8, 0.8, 1));
 
 	// Finish
 	AddCubeToWorld(Vector3(50, 5, -42.5), Vector3(5, 5, 10), 0.0f);
 	GameObject* finish = AddFinishToWorld(Vector3(55, 11, -42.5), Vector3(1, 1, 10), 0.0f);
 	finish->SetCollisionLayer(CollisionLayer::Finish);
 
-	AddCoinObjectToWorld(Vector3(25, 22.5, 12.5));
-	AddCoinObjectToWorld(Vector3(35+12.5, 22.5, 12.5));
+	AddCoinObjectToWorld(Vector3(25, 22.5, 13.5));
+	AddCoinObjectToWorld(Vector3(35+12.5, 22.5, 13.5));
 
-	InitDefaultFloor();
+	InitResetFloor();
 }
 
 void LevelOne::WinScreen() {
@@ -89,7 +90,7 @@ void LevelOne::ResetGame() {
 	transitionTimer = true;
 
 	InitWorld();
-	InitCamera();
+	//InitCamera();
 	elapsedTime = 0;
 	score = 0;
 }
@@ -143,6 +144,7 @@ GameObject* LevelOne::AddHammerToWorld(const Vector3& position, Vector3 dimensio
 
 	cube->SetRenderObject(new RenderObject(&cube->GetTransform(), cubeMesh, basicTex, basicShader));
 	cube->SetPhysicsObject(new PhysicsObject(&cube->GetTransform(), cube->GetBoundingVolume()));
+	cube->SetColour(Vector4(0.0, 0, 0.7, 1));
 
 	cube->GetPhysicsObject()->SetInverseMass(inverseMass);
 	cube->GetPhysicsObject()->InitCubeInertia();
@@ -180,6 +182,9 @@ void LevelOne::AddBridge() {
 	end->GetTransform().SetOrientation(
 		end->GetTransform().GetOrientation() * Quaternion(Vector3(-1, 0, 0), 1));
 
+	start->SetColour(Vector4(0.6, 0.3, 0, 1));
+	end->SetColour(Vector4(0.6, 0.3, 0, 1));
+
 	GameObject* previous = start;
 
 	for (int i = 0; i < numLinks; ++i) {
@@ -187,6 +192,7 @@ void LevelOne::AddBridge() {
 			cubeDistance, 0, 0), cubeSize.z, 1 ,invCubeMass);
 		block->GetTransform().SetOrientation(
 			block->GetTransform().GetOrientation() * Quaternion(Vector3(-1, 0, 0), 1));
+		block->SetColour(Vector4(0.6, 0.3, 0, 1));
 		PositionConstraint* constraint = new PositionConstraint(previous,
 			block, maxDistance);
 		world->AddConstraint(constraint);

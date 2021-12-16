@@ -13,6 +13,7 @@ GameObject::GameObject(string objectName)	{
 	renderObject	= nullptr;
 	collisionLayer  = CollisionLayer::Default;
 	lockFlags = 0;
+	colour = Vector4(1, 1, 1, 1);
 }
 
 GameObject::~GameObject()	{

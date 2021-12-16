@@ -29,6 +29,10 @@ NavigationGrid::NavigationGrid(const std::string&filename) : NavigationGrid() {
 	infile >> gridHeight;
 
 	allNodes = new GridNode[gridWidth * gridHeight];
+	grid = new int* [gridHeight];
+	for (int i = 0; i < gridHeight; ++i) {
+		grid[i] = new int[gridWidth];
+	}
 
 	for (int y = 0; y < gridHeight; ++y) {
 		for (int x = 0; x < gridWidth; ++x) {
@@ -36,6 +40,7 @@ NavigationGrid::NavigationGrid(const std::string&filename) : NavigationGrid() {
 			char type = 0;
 			infile >> type;
 			n.type = type;
+			grid[y][x] = type;
 			n.position = Vector3((float)(x * nodeSize), 0, (float)(y * nodeSize));
 		}
 	}

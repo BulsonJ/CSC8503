@@ -3,10 +3,10 @@
 10
 xxxxxxxxxx
 x........x
+xxx......x
+x.....xxxx
 x........x
-x....xxxxx
-x........x
-xxxxxx...x
+xxxxx....x
 x......xxx
 x..xxxxxxx
 x........x

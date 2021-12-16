@@ -24,7 +24,7 @@ PhysicsSystem::PhysicsSystem(GameWorld& g) : gameWorld(g)	{
 	useBroadPhase	= true;	
 	dTOffset		= 0.0f;
 	globalDamping	= 0.4f;
-	SetGravity(Vector3(0.0f, -9.8f, 0.0f));
+	SetGravity(Vector3(0.0f, -9.8f * 2, 0.0f));
 }
 
 PhysicsSystem::~PhysicsSystem()	{
@@ -272,11 +272,24 @@ void PhysicsSystem::ImpulseResolveCollision(GameObject& a, GameObject& b, Collis
 	physA->ApplyAngularImpulse(Vector3::Cross(relativeA, -fullImpulse));
 	physB->ApplyAngularImpulse(Vector3::Cross(relativeB, fullImpulse));
 
-	physA->SetLinearVelocity(physA->GetLinearVelocity() * (1 - physB->GetFriction()));
-	physB->SetLinearVelocity(physB->GetLinearVelocity() * (1 - physA->GetFriction()));
-	physA->SetAngularVelocity(physA->GetAngularVelocity() * (1 - physB->GetFriction()));
-	physB->SetAngularVelocity(physB->GetAngularVelocity() * (1 - physA->GetFriction()));
+	// Friction calculations
+	Vector3 tangent = contactVelocity - (p.normal * (Vector3::Dot(contactVelocity, p.normal)));
 
+	float friction = physA->GetFriction() * physB->GetFriction(); // disperse some kinectic energy
+	float angularEffectF = Vector3::Dot(inertiaA + inertiaB, tangent);
+
+	float jt = (-Vector3::Dot(contactVelocity * friction, tangent)) /
+		(totalMass + angularEffectF);
+
+	Vector3 fullImpulseF = p.normal * jt;
+
+	physA->ApplyLinearImpulse(-fullImpulseF);
+	physB->ApplyLinearImpulse(fullImpulseF);
+
+	physA->ApplyAngularImpulse(Vector3::Cross(relativeA, -fullImpulseF));
+	physB->ApplyAngularImpulse(Vector3::Cross(relativeB, fullImpulseF));
+
+	// Constraint velocities
 	a.ConstrainLinearVelocity(); a.ConstrainAngularVelocity();
 	b.ConstrainLinearVelocity(); b.ConstrainAngularVelocity();
 }

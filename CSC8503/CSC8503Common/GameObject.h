@@ -114,6 +114,17 @@ namespace NCL {
 				return lockFlags;
 			}
 
+			void SetColour(Vector4 c) {
+				colour = c;
+				if (renderObject) {
+					renderObject->SetColour(colour);
+				}
+			}
+
+			Vector4	GetColour() const {
+				return colour;
+			}
+
 			void ConstrainLinearVelocity();
 			void ConstrainAngularVelocity();
 
@@ -134,6 +145,8 @@ namespace NCL {
 			CollisionLayer collisionLayer;
 
 			Vector3 broadphaseAABB;
+
+			Vector4 colour;
 
 			int lockFlags;
 		};
