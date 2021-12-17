@@ -19,15 +19,14 @@ void LevelOne::InitWorld() {
 
 	AddPlayerToWorld(Vector3(0, 25, 0));
 
-	GameObject* hammer = AddHammerToWorld(Vector3(-4.5, 25.5, 0), Vector3(1, 5, 1), 1.0f);
-	hammer->SetLockFlags(AxisLock::ANGULAR_X | AxisLock::ANGULAR_Y | AxisLock::LINEAR_X |AxisLock::LINEAR_Y | AxisLock::LINEAR_Z);
+	GameObject* hammer = AddHammerToWorld(Vector3(-5.5, 22.5, -5), Vector3(1, 1, 7), 1.0f);
+	hammer->SetLockFlags(AxisLock::ANGULAR_X | AxisLock::ANGULAR_Z | AxisLock::LINEAR_X |AxisLock::LINEAR_Y | AxisLock::LINEAR_Z);
+	hammer->SetUsesGravity(false);
 
+	// Bride section
 	AddCubeToWorld(Vector3(0, 10, 0), Vector3(5, 10, 5), 0.0f);
-	// See saw
 	GameObject* bridge = AddCubeToWorld(Vector3(12.5, 17.5, 0), Vector3(7.5, 2.5, 2.5), 0.0f);
-
 	AddCubeToWorld(Vector3(25, 10, 0), Vector3(5, 10, 5), 0.0f);
-
 	GameObject* bridge2 = AddCubeToWorld(Vector3(25 + 12.5, 17.5, 0), Vector3(7.5, 2.5, 2.5), 0.0f);
 	AddCubeToWorld(Vector3(50, 10, 0), Vector3(5, 10, 5), 0.0f);
 
@@ -121,17 +120,16 @@ GameObject* LevelOne::AddHammerToWorld(const Vector3& position, Vector3 dimensio
 
 	cube->GetPhysicsObject()->SetInverseMass(inverseMass);
 	cube->GetPhysicsObject()->InitCubeInertia();
+	cube->GetPhysicsObject()->SetElasticity(1.0f);
 
 	world->AddGameObject(cube);
 
-	GameObject* hinge = AddCubeToWorld(position + Vector3(0,15,0), Vector3(1, 1, 1), 0.0f);
-	hinge->SetCollisionLayer(CollisionLayer::Wall);
+	//GameObject* hinge = AddCubeToWorld(position + Vector3(0,15,0), Vector3(1, 1, 1), 0.0f);
+	//hinge->SetCollisionLayer(CollisionLayer::Wall);
 	//PositionConstraint* posConstraint = new PositionConstraint(cube, hinge, 10);
 	//world->AddConstraint(posConstraint);
 	//HingeConstraint* constraint = new HingeConstraint(cube, hinge);
-	//world->AddConstraint(constraint);
-	//RotationConstraint* rotConstraint = new RotationConstraint(cube, Vector3(0,0,1));
-	//world->AddConstraint(rotConstraint);
+	//world->AddConstraint(constraint);;
 
 	return cube;
 }
