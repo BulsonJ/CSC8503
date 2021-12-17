@@ -16,8 +16,8 @@ void MainMenu::InitWorld() {
 void MainMenu::UpdateGame(float dt) {
 
 	Debug::Print("CSC 8503 Coursework", Vector2(30, 30));
-	Debug::Print("Level 1 - Press U", Vector2(30, 40));
-	Debug::Print("Level 2 - Press I", Vector2(30, 50));
+	Debug::Print("Level 1 - Press 1", Vector2(30, 40));
+	Debug::Print("Level 2 - Press 2", Vector2(30, 50));
 	Debug::Print("Exit - Press ESC", Vector2(30, 60));
 
 
