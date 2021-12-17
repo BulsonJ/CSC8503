@@ -57,9 +57,6 @@ void LevelOne::InitWorld() {
 	GameObject* finish = AddFinishToWorld(Vector3(55, 11, -42.5), Vector3(1, 1, 10), 0.0f);
 	finish->SetCollisionLayer(CollisionLayer::Finish);
 
-	//GameObject* test = AddCubeToWorld(Vector3(50, 20, -42.5), Vector3(2, 2, 2), 1.0f);
-	//test->SetCollisionLayer(CollisionLayer::Default);
-	//test->GetPhysicsObject()->SetFriction(0.0f);
 	InitMixedGridWorld(5, 5, 3, 3);
 
 	AddCoinObjectToWorld(Vector3(25, 32, 5.5));

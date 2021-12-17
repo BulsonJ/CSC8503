@@ -1,1 +1,9 @@
-﻿  GameTech.vcxproj -> C:\Users\b8025171\source\repos\Technologies\CSC8503\x64\Debug\GameTech.exe
+﻿  LevelOne.cpp
+C:\Users\b8025171\source\repos\Technologies\CSC8503\CSC8503\GameTech\LevelOne.cpp(49,39): warning C4305:  'argument': truncation from 'double' to 'float'
+C:\Users\b8025171\source\repos\Technologies\CSC8503\CSC8503\GameTech\LevelOne.cpp(51,44): warning C4305:  'argument': truncation from 'double' to 'float'
+C:\Users\b8025171\source\repos\Technologies\CSC8503\CSC8503\GameTech\LevelOne.cpp(53,44): warning C4305:  'argument': truncation from 'double' to 'float'
+C:\Users\b8025171\source\repos\Technologies\CSC8503\CSC8503\GameTech\LevelOne.cpp(126,40): warning C4305:  'argument': truncation from 'double' to 'float'
+C:\Users\b8025171\source\repos\Technologies\CSC8503\CSC8503\GameTech\LevelOne.cpp(166,41): warning C4305:  'argument': truncation from 'double' to 'float'
+C:\Users\b8025171\source\repos\Technologies\CSC8503\CSC8503\GameTech\LevelOne.cpp(167,39): warning C4305:  'argument': truncation from 'double' to 'float'
+C:\Users\b8025171\source\repos\Technologies\CSC8503\CSC8503\GameTech\LevelOne.cpp(176,42): warning C4305:  'argument': truncation from 'double' to 'float'
+  GameTech.vcxproj -> C:\Users\b8025171\source\repos\Technologies\CSC8503\x64\Debug\GameTech.exe
