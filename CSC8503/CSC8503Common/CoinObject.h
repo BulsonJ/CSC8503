@@ -9,6 +9,7 @@ namespace NCL {
 			~CoinObject();
 			
 		virtual void Update(float dt);
+		std::string GetState();
 		
 		protected:
 			void MoveLeft(float dt);
@@ -26,6 +27,8 @@ namespace NCL {
 
 			StateMachine * stateMachine;
 			float counter;
+
+
 		};
 	}
 }

@@ -132,7 +132,7 @@ void TutorialGame::UpdateGame(float dt) {
 	}
 
 	if (resetObject) {
-		if (resetObject->GetResetGame() == true) {
+		if (resetObject->GetResetGame() == true && !finishTransition) {
 			ResetGame();
 			//startTransition = true;
 			//resetTransition = true;
@@ -268,14 +268,11 @@ void TutorialGame::DebugObjectMovement() {
 		if (Window::GetKeyboard()->KeyDown(KeyboardKeys::RIGHT)) {
 			selectionObject->GetPhysicsObject()->AddTorque(Vector3(10, 0, 0));
 		}
-		if (Window::GetKeyboard()->KeyDown(KeyboardKeys::NUM7)) {
-			selectionObject->GetPhysicsObject()->AddTorque(Vector3(0, 10, 0));
+		if (Window::GetKeyboard()->KeyDown(KeyboardKeys::UP)) {
+			selectionObject->GetPhysicsObject()->AddTorque(Vector3(0, 1000, 0));
 		}
-		if (Window::GetKeyboard()->KeyDown(KeyboardKeys::NUM8)) {
-			selectionObject->GetPhysicsObject()->AddTorque(Vector3(0, -10, 0));
-		}
-		if (Window::GetKeyboard()->KeyDown(KeyboardKeys::RIGHT)) {
-			selectionObject->GetPhysicsObject()->AddTorque(Vector3(10, 0, 0));
+		if (Window::GetKeyboard()->KeyDown(KeyboardKeys::DOWN)) {
+			selectionObject->GetPhysicsObject()->AddTorque(Vector3(0, -1000, 0));
 		}
 	}
 }
@@ -519,18 +516,17 @@ void TutorialGame::InitMixedGridWorld(int numRows, int numCols, float rowSpacing
 
 	for (int x = 0; x < numCols; ++x) {
 		for (int z = 0; z < numRows; ++z) {
-			Vector3 position = Vector3(x * colSpacing, 10.0f, z * rowSpacing);
+			Vector3 position = Vector3(x * colSpacing, 10.0f, (z * rowSpacing) + 20.0f);
 
-			int result = rand() % 3;
+			GameObject* added = nullptr;
+			int result = rand() % 2;
 			if (result == 0) {
-				AddCubeToWorld(position, cubeDims);
-			}
-			else if (result == 1) {
-				AddSphereToWorld(position, sphereRadius);
+				added = AddCubeToWorld(position, cubeDims);
 			}
 			else {
-				AddCapsuleToWorld(position, 2, sphereRadius);
+				added = AddSphereToWorld(position, sphereRadius);
 			}
+			added->SetCollisionLayer(CollisionLayer::Default);
 		}
 	}
 }
@@ -561,7 +557,7 @@ void TutorialGame::InitGameExamples() {
 
 GameObject* TutorialGame::AddPlayerToWorld(const Vector3& position) {
 	float meshSize = 3.0f;
-	float inverseMass = 4.0f;
+	float inverseMass = 1.0f;
 
 	GameObject* character = new GameObject();
 	/*
@@ -712,12 +708,13 @@ bool TutorialGame::SelectObject() {
 
 			RayCollision closestCollision;
 			if (world->Raycast(ray, closestCollision, true)) {
-				selectionObject = (GameObject*)closestCollision.node;
-				selectionObject->GetRenderObject()->SetColour(Vector4(0, 1, 0, 1));
-				Debug::DrawLine(world->GetMainCamera()->GetPosition(), closestCollision.collidedAt, Debug::RED, 10.0f);
-				return true;
-			}
-			else {
+				if (((GameObject*)closestCollision.node)->GetCollisionLayer() != CollisionLayer::Wall) {
+					selectionObject = (GameObject*)closestCollision.node;
+					selectionObject->GetRenderObject()->SetColour(Vector4(0, 1, 0, 1));
+					Debug::DrawLine(world->GetMainCamera()->GetPosition(), closestCollision.collidedAt, Debug::RED, 10.0f);
+					return true;
+				}
+			} else {
 				return false;
 			}
 		}
@@ -766,11 +763,12 @@ void TutorialGame::DrawDebugInfo(GameObject* object) {
 	EnemyGameObject* e = dynamic_cast<EnemyGameObject*>(object);
 	if (e) {
 		Debug::DrawPath(e->GetPath());
+		renderer->DrawString("State: " + e->GetState(), Vector2(5, 15));
 	}
-	// Draw enemy debug information
+	// Draw coin debug information
 	CoinObject* c = dynamic_cast<CoinObject*>(object);
 	if (c) {
-		renderer->DrawString("State: test", Vector2(5, 15));
+		renderer->DrawString("State: " + c->GetState() , Vector2(5, 15));
 	}
 
 }

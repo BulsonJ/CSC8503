@@ -24,6 +24,7 @@ namespace NCL {
 			virtual void Update(float dt);
 
 			bool GetHitPlayer() { return hitPlayer; }
+			string GetState();
 		protected:
 			GameObject* target;
 			NavigationGrid* grid;

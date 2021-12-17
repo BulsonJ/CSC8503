@@ -39,3 +39,7 @@ void StateMachine::Update(float dt) {
 		}
 	}
 }
+
+std::string StateMachine::GetStateName() {
+	return activeState->GetName();
+}

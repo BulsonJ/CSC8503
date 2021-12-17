@@ -1,4 +1,4 @@
-﻿  PhysicsObject.cpp
-  PhysicsSystem.cpp
-  Generating Code...
-  CSC8503Common.vcxproj -> C:\Files\University\Technologies\8503-Release-2021\x64\Debug\CSC8503Common.lib
+﻿  PhysicsSystem.cpp
+C:\Users\b8025171\source\repos\Technologies\CSC8503\CSC8503\CSC8503Common\PhysicsSystem.cpp(262,21): warning C4244:  'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\b8025171\source\repos\Technologies\CSC8503\CSC8503\CSC8503Common\PhysicsSystem.cpp(284,17): warning C4244:  'initializing': conversion from 'double' to 'float', possible loss of data
+  CSC8503Common.vcxproj -> C:\Users\b8025171\source\repos\Technologies\CSC8503\x64\Debug\CSC8503Common.lib

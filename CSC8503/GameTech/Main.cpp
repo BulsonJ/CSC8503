@@ -77,7 +77,6 @@ protected:
 		*currentGame = new MainMenu();
 	}
 
-
 	TutorialGame** currentGame;
 };
 /*

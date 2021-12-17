@@ -15,12 +15,12 @@ CoinObject::CoinObject() {
 	{
 		this->MoveLeft(dt);
 	}
-	);
+	, "Move left");
 	State * stateB = new State([&](float dt)-> void
 	{
 		this->MoveRight(dt);
 	}
-	);
+	, "Move right");
 	
 	stateMachine->AddState(stateA);
 	stateMachine->AddState(stateB);
@@ -56,4 +56,8 @@ void CoinObject::MoveLeft(float dt) {
 void CoinObject::MoveRight(float dt) {
 	GetPhysicsObject()->AddForce({ 0, 0, 6 });
 	counter -= dt;
+}
+
+string CoinObject::GetState() {
+	return stateMachine->GetStateName();
 }

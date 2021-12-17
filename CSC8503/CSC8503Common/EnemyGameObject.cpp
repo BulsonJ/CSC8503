@@ -18,19 +18,19 @@ EnemyGameObject::EnemyGameObject(NavigationGrid* grid, GameObject* target) {
 			this->GetPhysicsObject()->ClearForces();
 			this->GetPhysicsObject()->SetLinearVelocity(Vector3(0, 0, 0));
 		}
-	);
+	, "Idle");
 	State* chase = new State([&](float dt)-> void
 		{
 			this->MoveToTarget(dt);
 		}
-	);
+	, "Chase Path");
 	State* chaseClose = new State([&](float dt)-> void
 		{
 			Vector3 dir = (this->target->GetTransform().GetPosition() - this->GetTransform().GetPosition());
 			dir = Vector3(dir.x, 0, dir.z);
 			GetPhysicsObject()->SetLinearVelocity(dir.Normalised() * 1000.0f * dt);
 		}
-	);
+	, "Chase Close");
 
 	stateMachine->AddState(idle);
 	stateMachine->AddState(chase);
@@ -71,15 +71,6 @@ EnemyGameObject::EnemyGameObject(NavigationGrid* grid, GameObject* target) {
 			}
 		}
 	));
-
-	/*
-	
-	
-	IDLE --------->
-	
-	
-	
-	*/
 }
 
 EnemyGameObject::~EnemyGameObject() {
@@ -123,4 +114,8 @@ void EnemyGameObject::CalculatePath() {
 	while (outPath.PopWaypoint(pos)) {
 		pathToTarget.push_back(pos);
 	}
+}
+
+string EnemyGameObject::GetState() {
+	return stateMachine->GetStateName();
 }
