@@ -19,7 +19,7 @@ void LevelOne::InitWorld() {
 
 	AddPlayerToWorld(Vector3(0, 25, 0));
 
-	AddHammerToWorld(Vector3(-5.5, 22.5, -5), Vector3(1, 1, 7), 1.0f);
+	AddHammerToWorld(Vector3(-5.5, 22.5, -5), Vector3(1, 1, 7), 0.1f);
 
 	// Bride section
 	AddCubeToWorld(Vector3(0, 10, 0), Vector3(5, 10, 5), 0.0f);
@@ -28,19 +28,22 @@ void LevelOne::InitWorld() {
 	GameObject* bridge2 = AddCubeToWorld(Vector3(25 + 12.5, 17.5, 0), Vector3(7.5, 2.5, 2.5), 0.0f);
 	AddCubeToWorld(Vector3(50, 10, 0), Vector3(5, 10, 5), 0.0f);
 
-	AddHammerToWorld(Vector3(-5.5+60, 22.5, 0), Vector3(1, 1, 7), 1.0f);
-	AddHammerToWorld(Vector3(-5.5 , 12.5, -35), Vector3(1, 1, 7), 1.0f);
+	AddHammerToWorld(Vector3(-5.5+60, 22.5, 0), Vector3(1, 1, 7), 0.1f);
 
 	GameObject* ramp = AddOBBCubeToWorld(Vector3(50, 10, -10), Vector3(5, 10, 5), 0.0f);
 	ramp->GetTransform().SetOrientation(
 		ramp->GetTransform().GetOrientation() * Quaternion(Vector3(0,-1,-0.5), 0));
 
 	AddCubeToWorld(Vector3(50, 5, -22.5), Vector3(5, 5, 5), 0.0f);
+	AddHammerToWorld(Vector3(-5.5 + 60, 12, -22.5), Vector3(1, 1, 7), 0.1f);
 
 	AddBridge();
 	AddCubeToWorld(Vector3(0, 5, -22.5), Vector3(5, 5, 5), 0.0f);
 	AddCubeToWorld(Vector3(0, 5, -32.5), Vector3(5, 5, 5), 0.0f);
 	AddCubeToWorld(Vector3(0, 5, -42.5), Vector3(5, 5, 5), 0.0f);
+
+	AddHammerToWorld(Vector3(-5.5, 12.5, -20), Vector3(1, 1, 7), 0.1f);
+	AddHammerToWorld(Vector3(-5.5, 12.5, -40), Vector3(1, 1, 7), 0.1f);
 
 	// Ice
 	GameObject* ice = AddCubeToWorld(Vector3(25, 9, -42.5), Vector3(20, 1, 8), 0.0f);
@@ -49,15 +52,15 @@ void LevelOne::InitWorld() {
 	ice->SetColour(Vector4(0, 0.8, 0.8, 1));
 	GameObject* obstacle = AddSphereToWorld(Vector3(25, 9, -42.5), 3, 0.0f);
 	obstacle->SetColour(Vector4(0, 0.8, 0.8, 1));
+	obstacle->SetCollisionLayer(CollisionLayer::Wall);
 	obstacle = AddSphereToWorld(Vector3(35, 9, -48.5), 3, 0.0f);
 	obstacle->SetColour(Vector4(0, 0.8, 0.8, 1));
+	obstacle->SetCollisionLayer(CollisionLayer::Wall);
 
 	// Finish
 	AddCubeToWorld(Vector3(50, 5, -42.5), Vector3(5, 5, 10), 0.0f);
 	GameObject* finish = AddFinishToWorld(Vector3(55, 11, -42.5), Vector3(1, 1, 10), 0.0f);
 	finish->SetCollisionLayer(CollisionLayer::Finish);
-
-	InitMixedGridWorld(5, 5, 3, 3);
 
 	AddCoinObjectToWorld(Vector3(25, 32, 5.5));
 	AddCoinObjectToWorld(Vector3(35+12.5, 32, 5.5));

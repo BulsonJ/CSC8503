@@ -294,7 +294,7 @@ void PhysicsSystem::ImpulseResolveCollision(GameObject& a, GameObject& b, Collis
 
 	physA->ApplyAngularImpulse(Vector3::Cross(relativeA, -fullImpulseF));
 	physB->ApplyAngularImpulse(Vector3::Cross(relativeB, fullImpulseF));
-
+	
 	// Constraint velocities
 	a.ConstrainLinearVelocity(); a.ConstrainAngularVelocity();
 	b.ConstrainLinearVelocity(); b.ConstrainAngularVelocity();

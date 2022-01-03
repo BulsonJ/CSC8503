@@ -380,14 +380,15 @@ bool CollisionDetection::ObjectIntersection(GameObject* a, GameObject* b, Collis
 		return AABBSphereIntersection((AABBVolume&)*volB, transformB, (SphereVolume&)*volA, transformA, collisionInfo);
 	}
 
-	if (volA->type == VolumeType::OBB && volB->type == VolumeType::AABB) {
+	// Not functional
+	/*if (volA->type == VolumeType::OBB && volB->type == VolumeType::AABB) {
 		return OBBAABBIntersection((OBBVolume&)*volA, transformA, (AABBVolume&)*volB, transformB, collisionInfo);
 	}
 	if (volA->type == VolumeType::AABB && volB->type == VolumeType::OBB) {
 		collisionInfo.a = b;
 		collisionInfo.b = a;
 		return OBBAABBIntersection((OBBVolume&)*volB, transformB, (AABBVolume&)*volA, transformA, collisionInfo);
-	}
+	}*/
 
 	if (volA->type == VolumeType::OBB && volB->type == VolumeType::Sphere) {
 		return OBBSphereIntersection((OBBVolume&)*volA, transformA, (SphereVolume&)*volB, transformB, collisionInfo);
@@ -520,7 +521,7 @@ bool CollisionDetection::AABBSphereIntersection(const AABBVolume& volumeA, const
 		Vector3 collisionNormal = localPoint.Normalised();
 		float penetration = (volumeB.GetRadius() - distance);
 		
-		Vector3 localA = Vector3();
+		Vector3 localA = closestPointOnBox;
 		Vector3 localB = -collisionNormal * volumeB.GetRadius();
 		
 		collisionInfo.AddContactPoint(localA, localB,
@@ -536,6 +537,7 @@ bool CollisionDetection::OBBIntersection(
 	return false;
 }
 
+// Not functional
 bool CollisionDetection::OBBAABBIntersection(
 	const OBBVolume& volumeA, const Transform& worldTransformA,
 	const AABBVolume& volumeB, const Transform& worldTransformB, CollisionInfo& collisionInfo) {

@@ -269,10 +269,10 @@ void TutorialGame::DebugObjectMovement() {
 			selectionObject->GetPhysicsObject()->AddTorque(Vector3(10, 0, 0));
 		}
 		if (Window::GetKeyboard()->KeyDown(KeyboardKeys::UP)) {
-			selectionObject->GetPhysicsObject()->AddTorque(Vector3(0, 1000, 0));
+			selectionObject->GetPhysicsObject()->AddTorque(Vector3(0, 5000, 0));
 		}
 		if (Window::GetKeyboard()->KeyDown(KeyboardKeys::DOWN)) {
-			selectionObject->GetPhysicsObject()->AddTorque(Vector3(0, -1000, 0));
+			selectionObject->GetPhysicsObject()->AddTorque(Vector3(0, -5000, 0));
 		}
 	}
 }
@@ -289,42 +289,6 @@ void TutorialGame::InitCamera() {
 void TutorialGame::InitWorld() {
 	world->ClearAndErase();
 	physics->Clear();
-
-	BridgeConstraintTest();
-	InitMixedGridWorld(5, 5, 3.5f, 3.5f);
-	InitGameExamples();
-	InitDefaultFloor();
-	AddCoinObjectToWorld(Vector3(0, 20, 0));
-}
-
-void TutorialGame::BridgeConstraintTest() {
-	Vector3 cubeSize = Vector3(8, 8, 8);
-	
-	float invCubeMass = 5; //how heavy the middle pieces are
-	int numLinks = 10;
-	float maxDistance = 30; // constraint distance
-	float cubeDistance = 20; // distance between links
-	
-	Vector3 startPos = Vector3(100, 100, 100);
-	
-	GameObject * start = AddCubeToWorld(startPos + Vector3(0, 0, 0)
-			, cubeSize, 0);
-	GameObject * end = AddCubeToWorld(startPos + Vector3((numLinks + 2)
-		* cubeDistance, 0, 0), cubeSize, 0);
-	
-	GameObject * previous = start;
-	
-	for (int i = 0; i < numLinks; ++i) {
-		GameObject * block = AddCubeToWorld(startPos + Vector3((i + 1) *
-			cubeDistance, 0, 0), cubeSize, invCubeMass);
-		PositionConstraint * constraint = new PositionConstraint(previous,
-			block, maxDistance);
-		world->AddConstraint(constraint);
-		previous = block;
-	}
-	PositionConstraint * constraint = new PositionConstraint(previous,
-		end, maxDistance);
-	world->AddConstraint(constraint);
 }
 
 /*
@@ -560,23 +524,6 @@ GameObject* TutorialGame::AddPlayerToWorld(const Vector3& position) {
 	float inverseMass = 1.0f;
 
 	GameObject* character = new GameObject();
-	/*
-	AABBVolume* volume = new AABBVolume(Vector3(0.3f, 0.85f, 0.3f) * meshSize);
-
-	character->SetBoundingVolume((CollisionVolume*)volume);
-
-	character->GetTransform()
-		.SetScale(Vector3(meshSize, meshSize, meshSize))
-		.SetPosition(position);
-
-	if (rand() % 2) {
-		character->SetRenderObject(new RenderObject(&character->GetTransform(), charMeshA, nullptr, basicShader));
-	}
-	else {
-		character->SetRenderObject(new RenderObject(&character->GetTransform(), charMeshB, nullptr, basicShader));
-	}
-	*/
-	//character->SetPhysicsObject(new PhysicsObject(&character->GetTransform(), character->GetBoundingVolume()));
 
 	int radius = 2;
 	Vector3 sphereSize = Vector3(radius, radius, radius);
